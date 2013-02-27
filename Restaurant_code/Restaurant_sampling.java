@@ -9,7 +9,7 @@ import javax.swing.*;
 //import java.util.Timer;
 //import java.util.TimerTask;
 
-public class Restaurant_test
+public class Restaurant
 {	
 	boolean[] dish = new boolean[4];
 	
@@ -23,10 +23,10 @@ public class Restaurant_test
 	 * Restaurant constructor.
 	 * @param number
 	 */
-	public Restaurant_test(int number)
-    {
-    	dish[0] = false;
-    	dish[1] = false;
+	public Restaurant(int number)
+	{
+		dish[0] = false;
+		dish[1] = false;
 		dish[2] = false;
 		dish[2] = false;
 		table_number = number;		
