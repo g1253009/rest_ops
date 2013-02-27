@@ -24,41 +24,41 @@ public class Restaurant
 	 * @param number
 	 */
 	public Restaurant(int number)
-	{
-		dish[0] = false;
-		dish[1] = false;
-		dish[2] = false;
-		dish[2] = false;
+    {
+		for(int i = 0; i < dish.length; i++)
+		{
+			dish[i] = false;
+		}
 		table_number = number;		
 	}
     
-	/*
-	 * Produces a normal random variable between -2.14 and 2.14 for the dish delays.
-	 * @return double
-	 */
-	public double delay_Norm_Dist()
-	{    
-		double PI = 3.141592654;
-		double x,y;
-		double z,z1,z2;
+    /*
+     * Produces a normal random variable between -2.14 and 2.14 for the dish delays.
+     * @return double
+     */
+    public double delay_Norm_Dist()
+    {    
+        double PI = 3.141592654;
+        double x,y;
+        double z,z1,z2;
         
-		x = Math.random() * ( 99 - 0 );
-		y = Math.random() * (99 - 0);
+        x = Math.random() * ( 99 - 0 );
+        y = Math.random() * (99 - 0);
         
-		while(x == 0)
-		    x = Math.random() * ( 99 - 0 );
-		while(y == 0)
-		    y = Math.random() * ( 99 - 0 );
+        while(x == 0)
+            x = Math.random() * ( 99 - 0 );
+        while(y == 0)
+            y = Math.random() * ( 99 - 0 );
         
-		x /= 100;
-		y /= 100;
+        x /= 100;
+        y /= 100;
         
-		z1 = Math.sqrt(-2*Math.log(x))*Math.cos(2*PI*y);
-		z2 = Math.sqrt(-2*Math.log(x))*Math.sin(2*PI*y);
-		z = (z1+z2) / 2;
+        z1 = Math.sqrt(-2*Math.log(x))*Math.cos(2*PI*y);
+        z2 = Math.sqrt(-2*Math.log(x))*Math.sin(2*PI*y);
+        z = (z1+z2) / 2;
         
-		return Math.abs(z);   
-	}
+        return Math.abs(z);   
+    }
     
     /*
      * Can also use this for the delay.
@@ -126,15 +126,12 @@ public class Restaurant
 	       System.out.println("Error: please enter 'yes' or 'no'");
 	       System.exit(1);
 	    }
-	      
-	    if(dish_input[0].equals("yes"))
-	     dish[0] = true; 
-	    if(dish_input[1].equals("yes"))
-	     dish[1] = true;
-	    if(dish_input[2].equals("yes"))
-	     dish[2] = true;
-	    if(dish_input[3].equals("yes"))
-	     dish[3] = true;
+	    
+	    for(int i = 0; i < dish_input.length; i++)
+	    {
+	    	if(dish_input[i].equals("yes"))
+	    		dish[i] = true;
+	    }
 	       
 	    System.out.println(" ");
 	}
@@ -284,7 +281,7 @@ public class Restaurant
 	 */
 	public void food_ready()
 	{	
-		/* Timers not running concurrently*/
+		// Timers not running concurrently
 		
 		if(dish[0])
 		{	
