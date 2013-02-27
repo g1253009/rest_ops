@@ -8,7 +8,8 @@ import java.io.InputStreamReader;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Restaurant {
+public class Restaurant
+{
 
 	
 	/**
