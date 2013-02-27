@@ -10,9 +10,6 @@ import javax.swing.*;
 
 public class Restaurant
 {	
-	/**
-     * @param args
-	 */
 	boolean dish_1, dish_2, dish_3, dish_4;
 	
 	static double dish_1_HC_delay, dish_2_HC_delay, dish_3_HC_delay, dish_4_HC_delay;
@@ -21,6 +18,10 @@ public class Restaurant
 	
 	static int table_number;
 	
+	/*
+	 * Restaurant constructor.
+	 * @param number
+	 */
     public Restaurant(int number)
     {
     	dish_1 = false;
@@ -30,6 +31,10 @@ public class Restaurant
 		table_number = number;		
 	}
     
+    /*
+     * Produces a normal random variable for the dish delays.
+     * @return double
+     */
     public double delay_Norm_Dist()
     {    
         double PI = 3.141592654;
@@ -54,6 +59,10 @@ public class Restaurant
         return Math.abs(z);   
     }
 	
+    /*
+     * Accepts order from the player.
+     * @return void
+     */
 	public void take_order()
 	{
 		 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -63,8 +72,8 @@ public class Restaurant
 		 String dish_3_input = null;
 		 String dish_4_input = null;
 		 
-	     System.out.println(" Place Order: enter items to be ordered 'yes' or 'no': ");
-	     System.out.println(" Soup:");
+	     System.out.println("Place Order: enter items to be ordered 'yes' or 'no': ");
+	     System.out.println("Soup:");
 		
 	     try
 	     {
@@ -72,11 +81,11 @@ public class Restaurant
 	     }
 	     catch (IOException ioe)
 	     {
-	        System.out.println("IO error trying to read your name!");
+	        System.out.println("Error: please enter 'yes' or 'no'");
 	        System.exit(1);
 	     }
 	      
-	     System.out.println(" Steak:");
+	     System.out.println("Steak:");
 			
 	     try
 	     {
@@ -84,11 +93,11 @@ public class Restaurant
 	     }
 	     catch (IOException ioe)
 	     {
-	        System.out.println("IO error trying to read your name!");
+	        System.out.println("Error: please enter 'yes' or 'no'");
 	        System.exit(1);
 	     }
 		
-	     System.out.println(" Burger:");
+	     System.out.println("Burger:");
 			
 	     try
 	     {
@@ -96,11 +105,11 @@ public class Restaurant
 	     }
 	     catch (IOException ioe)
 	     {
-	        System.out.println("IO error trying to read your name!");
+	        System.out.println("Error: please enter 'yes' or 'no'");
 	        System.exit(1);
 	     }
 	      
-	     System.out.println(" Fish:");
+	     System.out.println("Fish:");
 			
 	     try
 	     {
@@ -108,32 +117,56 @@ public class Restaurant
 	     }
 	     catch (IOException ioe)
 	     {
-	        System.out.println("IO error trying to read your name!");
+	        System.out.println("Error: please enter 'yes' or 'no'");
 	        System.exit(1);
 	     }
 	      
-	     if(dish_1_input.equals("yes")) dish_1 = true; 
-	     if(dish_2_input.equals("yes")) dish_2 = true;
-	     if(dish_3_input.equals("yes")) dish_3 = true;
-	     if(dish_4_input.equals("yes")) dish_4 = true;
+	     if(dish_1_input.equals("yes"))
+	    	 dish_1 = true; 
+	     if(dish_2_input.equals("yes"))
+	    	 dish_2 = true;
+	     if(dish_3_input.equals("yes"))
+	    	 dish_3 = true;
+	     if(dish_4_input.equals("yes"))
+	    	 dish_4 = true;
 	       
 	     System.out.println(" ");
 	}
 	
+	/*
+	 * Prints out the confirmed order to the screen.
+	 * @return void 
+	 */
 	public void confirm_order()
 	{
 		System.out.println(" Order Confirmation: table ");
 		System.out.println(table_number);
 		System.out.println(" has ordered ");
 
-		if(dish_1) System.out.println(" 1 soup - expected preparation time - 2 seconds"); else System.out.println(" 0 soup ");
-		if(dish_2) System.out.println(" 1 steak - expected preparation time - 5 seconds"); else System.out.println(" 0 steak ");
-		if(dish_3) System.out.println(" 1 burger - expected preparation time - 10 seconds"); else System.out.println(" 0 burger ");
-		if(dish_4) System.out.println(" 1 fish - expected preparation time - 15 seconds"); else System.out.println(" 0 fish ");
+		if(dish_1)
+			System.out.println("1 soup - expected preparation time - 2 seconds");
+		else
+			System.out.println("0 soup ");
+		if(dish_2)
+			System.out.println("1 steak - expected preparation time - 5 seconds");
+		else
+			System.out.println("0 steak ");
+		if(dish_3)
+			System.out.println("1 burger - expected preparation time - 10 seconds");
+		else
+			System.out.println("0 burger ");
+		if(dish_4)
+			System.out.println("1 fish - expected preparation time - 15 seconds");
+		else
+			System.out.println("0 fish ");
 
 		System.out.println(" ");
 	}
 	
+	/*
+	 * Allows the player to enter the required delay for each dish.
+	 * @return void
+	 */
 	public void head_chef_delay()
 	{	
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -143,26 +176,39 @@ public class Restaurant
 		String dish_3_delay = null;
 		String dish_4_delay = null;
 		
-		//Confirm order for Head Chef
+		// show player the expected preparation times
 		System.out.println("Head Chef: order ready for preparation: ");
 
-		if(dish_1) System.out.println(" 1 soup - expected preparation time - 2 seconds"); else System.out.println(" 0 soup ");
-		if(dish_2) System.out.println(" 1 steak - expected preparation time - 5 seconds"); else System.out.println(" 0 steak ");
-		if(dish_3) System.out.println(" 1 burger - expected preparation time - 10 seconds"); else System.out.println(" 0 burger ");
-		if(dish_4) System.out.println(" 1 fish - expected preparation time - 15 seconds"); else System.out.println(" 0 fish ");
+		if(dish_1)
+			System.out.println(" 1 soup - expected preparation time: 2 seconds");
+		else
+			System.out.println(" 0 soup ");
+		if(dish_2)
+			System.out.println(" 1 steak - expected preparation time: 5 seconds");
+		else
+			System.out.println(" 0 steak ");
+		if(dish_3)
+			System.out.println(" 1 burger - expected preparation time: 10 seconds");
+		else
+			System.out.println(" 0 burger ");
+		if(dish_4)
+			System.out.println(" 1 fish - expected preparation time: 15 seconds");
+		else
+			System.out.println(" 0 fish ");
 
-		System.out.println("Confirm Delay; for each dish ");
+		System.out.println("Confirm delay for each dish");
 
+		// allow player to enter delays for each dish
 		if(dish_1)
 		{
-			System.out.println(" Enter soup delay: "); 
+			System.out.println("Enter soup delay: "); 
 			try
 			{
 		         dish_1_delay = br.readLine();
 		    }
 			catch (IOException ioe)
 			{
-		         System.out.println("IO error trying to read your name!");
+		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
 			
@@ -171,14 +217,14 @@ public class Restaurant
 
 		if(dish_2)
 		{
-			System.out.println(" Enter steak delay: "); 
+			System.out.println("Enter steak delay: "); 
 			try
 			{
 		         dish_2_delay = br.readLine();
 		    }
 			catch (IOException ioe)
 			{
-		         System.out.println("IO error trying to read your name!");
+		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
 			
@@ -187,14 +233,14 @@ public class Restaurant
 		
 		if(dish_3)
 		{
-			System.out.println(" Enter burger delay: "); 
+			System.out.println("Enter burger delay: "); 
 			try
 			{
 		         dish_3_delay = br.readLine();
 		    }
 			catch (IOException ioe)
 		    {
-		         System.out.println("IO error trying to read your name!");
+		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
 			
@@ -203,14 +249,14 @@ public class Restaurant
 		
 		if(dish_4)
 		{
-			System.out.println(" Enter fish delay: "); 
+			System.out.println("Enter fish delay: "); 
 			try
 			{
 		         dish_4_delay = br.readLine();
 		    }
 			catch (IOException ioe)
 			{
-		         System.out.println("IO error trying to read your name!");
+		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
 			
@@ -220,6 +266,10 @@ public class Restaurant
 		System.out.println(" ");
 	}
 	
+	/*
+	 * Adds an additional random delay to the user-specified delay for each dish.
+	 * @return void
+	 */
 	public void food_prep()
 	{
 		double delay = delay_Norm_Dist();
@@ -229,62 +279,64 @@ public class Restaurant
 		dish_4_prep = 15.0 + (delay*20);	
 	}
 	
+	/*
+	 * Confirms the final preparation time.
+	 */
 	public void food_ready()
 	{	
 		/* Timers not running concurrently*/
 		
 		if(dish_1)
 		{	
-			final double prep_time = Math.abs(dish_1_HC_delay+dish_1_prep);
+			final double prep_time = Math.abs(dish_1_HC_delay + dish_1_prep);
 			
 			ActionListener taskPerformer = new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-                //...Perform a task...
-
 					System.out.println("Soup is ready for table " + table_number);
 					System.out.println("Soup took " + prep_time + " seconds");
 					System.out.println();
 				}
             };
             
-        Timer timer = new Timer((int)(1000*(dish_1_HC_delay+dish_1_prep)), taskPerformer);
-        timer.setRepeats(false);
-        timer.start();
+            Timer timer = new Timer((int)(1000*(dish_1_HC_delay + dish_1_prep)), taskPerformer);
+            timer.setRepeats(false);
+            timer.start();
         
-        try {
-			Thread.sleep((int)(1000*prep_time));
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            try
+            {
+            	Thread.sleep((int)(1000*prep_time));
+            }
+            catch
+            (InterruptedException e)
+            {
+            	e.printStackTrace();
+            }
         
-			//Timer timer = new Timer("HC Delay");
-			//MyTask t = new MyTask();
-			//timer.schedule(t, 1000*(dish_1_HC_delay+dish_1_prep), 1000*(dish_1_HC_delay+dish_1_prep));
+				//Timer timer = new Timer("HC Delay");
+				//MyTask t = new MyTask();
+				//timer.schedule(t, 1000*(dish_1_HC_delay+dish_1_prep), 1000*(dish_1_HC_delay+dish_1_prep));
 			
-			//System.out.println(" Soup took: ");
-			//System.out.println(dish_1_HC_delay + dish_1_prep);
+				//System.out.println(" Soup took: ");
+				//System.out.println(dish_1_HC_delay + dish_1_prep);
 		}
 		
 		if(dish_2)
 		{
-			final double prep_time = Math.abs(dish_2_HC_delay+dish_2_prep);
+			final double prep_time = Math.abs(dish_2_HC_delay + dish_2_prep);
 			
 			ActionListener taskPerformer = new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					//...Perform a task...
-
 					System.out.println("Steak is ready for table " + table_number);
 					System.out.println("Steak took " + prep_time + " seconds");
 					System.out.println();
 				}
             };
            
-            Timer timer = new Timer((int)(1000*(dish_2_HC_delay+dish_2_prep)) , taskPerformer);
+            Timer timer = new Timer((int)(1000*(dish_2_HC_delay + dish_2_prep)), taskPerformer);
             timer.setRepeats(false);
             timer.start();
        
@@ -294,28 +346,25 @@ public class Restaurant
             }
             catch (InterruptedException e)
             {
-            	// TODO Auto-generated catch block
             	e.printStackTrace();
             }		
        }
 		
 		if(dish_3)
 		{
-			final double prep_time = Math.abs(dish_3_HC_delay+dish_3_prep);
+			final double prep_time = Math.abs(dish_3_HC_delay + dish_3_prep);
 			
 			ActionListener taskPerformer = new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					//...Perform a task...
-
 					System.out.println("Burger is ready for table " + table_number);
 					System.out.println("Burger took " + prep_time + " seconds");
 					System.out.println();
 				}
             };
            
-            Timer timer = new Timer((int)(1000*(dish_3_HC_delay+dish_3_prep)), taskPerformer);
+            Timer timer = new Timer((int)(1000*(dish_3_HC_delay + dish_3_prep)), taskPerformer);
             timer.setRepeats(false);
             timer.start();
        
@@ -325,7 +374,6 @@ public class Restaurant
             }
             catch (InterruptedException e)
             {
-            	// TODO Auto-generated catch block
             	e.printStackTrace();
             }
 		}
@@ -338,8 +386,6 @@ public class Restaurant
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					//...Perform a task...
-
 					System.out.println("Fish is ready for table " + table_number);
 					System.out.println("Fish took " + prep_time + " seconds");
 					System.out.println();
@@ -356,22 +402,21 @@ public class Restaurant
             }
             catch (InterruptedException e)
             {
-            	// TODO Auto-generated catch block
             	e.printStackTrace();
             }
 		}
 	}
 	
+	/*
+	 * Game controlled through a while loop test on the answer to the question - start taking orders.
+	 * Main function proceeds through process methods of order, food preparation etc.
+	 */
 	public static void main(String[] args)
-	{
-		// TODO Auto-generated method stub
-
-		/* Game controlled through a while loop test on the answer to the question - start taking orders */
-		
+	{		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String play_game = null;
 		 
-	    System.out.println(" Would you like to start taking orders yes/no? ");
+	    System.out.println("Would you like to start taking orders? Enter yes or no: ");
 		
 	    try
 	    {
@@ -379,14 +424,12 @@ public class Restaurant
 	    }
 	    catch (IOException ioe)
 	    {
-	         System.out.println("IO error trying to read your name!");
+	         System.out.println("Error: please enter yes or no");
 	         System.exit(1);
 	    }
 
 		while(play_game.equals("yes"))
 		{	
-			/*Main function proceeds through process methods of order, food prep etc */
-			
 			Restaurant table_1 = new Restaurant(1);
 			table_1.take_order();
 			//table_1.confirm_order();
@@ -394,7 +437,7 @@ public class Restaurant
 			table_1.food_prep();	
 			table_1.food_ready();
 		
-			System.out.println(" Would you like to take more orders yes/no? ");
+			System.out.println("Would you like to take more orders? Enter yes or no: ");
 		
 			try
 			{
@@ -402,11 +445,11 @@ public class Restaurant
 			}
 			catch (IOException ioe)
 			{
-				System.out.println("IO error trying to read your name!");
+				System.out.println("Error: please enter yes or no");
 				System.exit(1);
 			}
-	
-			System.out.println(); 
 		}
+		
+		System.out.println("Thanks for playing!");
 	}
 }
