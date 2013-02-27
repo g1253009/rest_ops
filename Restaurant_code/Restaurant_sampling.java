@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 import java.awt.event.*;
 import javax.swing.*;
 //import java.util.Timer;
@@ -32,7 +33,7 @@ public class Restaurant
 	}
     
     /*
-     * Produces a normal random variable for the dish delays.
+     * Produces a normal random variable between -2.14 and 2.14 for the dish delays.
      * @return double
      */
     public double delay_Norm_Dist()
@@ -58,6 +59,17 @@ public class Restaurant
         
         return Math.abs(z);   
     }
+    /*
+     * Can also use this for the delay.
+     * Uses the built-in nextGaussian method.
+     * @return double
+     */
+	public static double delay_Norm_Dist_2()
+	{
+		Random generator = new Random();
+		
+		return(generator.nextGaussian());
+	}
 	
     /*
      * Accepts order from the player.
@@ -139,9 +151,7 @@ public class Restaurant
 	 */
 	public void confirm_order()
 	{
-		System.out.println(" Order Confirmation: table ");
-		System.out.println(table_number);
-		System.out.println(" has ordered ");
+		System.out.println("Order Confirmation: table " + table_number + " has ordered:");
 
 		if(dish_1)
 			System.out.println("1 soup - expected preparation time - 2 seconds");
@@ -211,7 +221,6 @@ public class Restaurant
 		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
-			
 			dish_1_HC_delay = Integer.parseInt(dish_1_delay);
 		}
 
@@ -227,7 +236,6 @@ public class Restaurant
 		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
-			
 			dish_2_HC_delay = Integer.parseInt(dish_2_delay);
 		}
 		
@@ -243,7 +251,6 @@ public class Restaurant
 		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
-			
 			dish_3_HC_delay = Integer.parseInt(dish_3_delay);
 		}
 		
@@ -259,7 +266,6 @@ public class Restaurant
 		         System.out.println("Error: please enter a number in seconds");
 		         System.exit(1);
 		    }
-			
 			dish_4_HC_delay = Integer.parseInt(dish_4_delay);
 		}
 		
@@ -272,15 +278,18 @@ public class Restaurant
 	 */
 	public void food_prep()
 	{
-		double delay = delay_Norm_Dist();
-		dish_1_prep = 2.0 + (delay*5);
-		dish_2_prep = 5.0 + (delay*10);
-		dish_3_prep = 10.0 + (delay*15);
-		dish_4_prep = 15.0 + (delay*20);	
+		// Preparation time is a constant plus a random delay.
+		double delay = delay_Norm_Dist_2();
+		dish_1_prep = 2 + delay;
+		dish_2_prep = 5 + delay;
+		dish_3_prep = 10 + delay;
+		dish_4_prep = 15 + delay;	
 	}
 	
 	/*
-	 * Confirms the final preparation time.
+	 * Starts off the dish preparation and confirms the final preparation time
+	 * when the dish is ready.
+	 * @return void
 	 */
 	public void food_ready()
 	{	
@@ -294,9 +303,9 @@ public class Restaurant
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("Soup is ready for table " + table_number);
-					System.out.println("Soup took " + prep_time + " seconds");
-					System.out.println();
+					//System.out.println("Soup is ready for table " + table_number);
+					//System.out.println("Soup took " + prep_time + " seconds");
+					System.out.format("Soup is ready for table " + table_number + " and took approximately %.0f seconds%n", prep_time);
 				}
             };
             
@@ -314,12 +323,11 @@ public class Restaurant
             	e.printStackTrace();
             }
         
-				//Timer timer = new Timer("HC Delay");
-				//MyTask t = new MyTask();
-				//timer.schedule(t, 1000*(dish_1_HC_delay+dish_1_prep), 1000*(dish_1_HC_delay+dish_1_prep));
-			
-				//System.out.println(" Soup took: ");
-				//System.out.println(dish_1_HC_delay + dish_1_prep);
+			//Timer timer = new Timer("HC Delay");
+			//MyTask t = new MyTask();
+			//timer.schedule(t, 1000*(dish_1_HC_delay+dish_1_prep), 1000*(dish_1_HC_delay+dish_1_prep));
+			//System.out.println(" Soup took: ");
+			//System.out.println(dish_1_HC_delay + dish_1_prep);
 		}
 		
 		if(dish_2)
@@ -330,9 +338,9 @@ public class Restaurant
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("Steak is ready for table " + table_number);
-					System.out.println("Steak took " + prep_time + " seconds");
-					System.out.println();
+					//System.out.println("Steak is ready for table " + table_number);
+					//System.out.println("Steak took " + prep_time + " seconds");
+					System.out.format("Steak is ready for table " + table_number + " and took approximately %.0f seconds%n", prep_time);
 				}
             };
            
@@ -358,9 +366,9 @@ public class Restaurant
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("Burger is ready for table " + table_number);
-					System.out.println("Burger took " + prep_time + " seconds");
-					System.out.println();
+					//System.out.println("Burger is ready for table " + table_number);
+					//System.out.println("Burger took " + prep_time + " seconds");
+					System.out.format("Burger is ready for table " + table_number + " and took approximately %.0f seconds%n", prep_time);
 				}
             };
            
@@ -386,9 +394,9 @@ public class Restaurant
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("Fish is ready for table " + table_number);
-					System.out.println("Fish took " + prep_time + " seconds");
-					System.out.println();
+					//System.out.println("Fish is ready for table " + table_number);
+					//System.out.println("Fish took " + prep_time + " seconds");
+					System.out.format("Fish is ready for table " + table_number + " and took approximately %.0f seconds%n", prep_time);
 				}
             };
            
@@ -408,7 +416,7 @@ public class Restaurant
 	}
 	
 	/*
-	 * Game controlled through a while loop test on the answer to the question - start taking orders.
+	 * Game controlled through a while loop test on the answer to the question "start taking orders".
 	 * Main function proceeds through process methods of order, food preparation etc.
 	 */
 	public static void main(String[] args)
