@@ -59,6 +59,7 @@ public class Restaurant
         
         return Math.abs(z);   
     }
+    
     /*
      * Can also use this for the delay.
      * Uses the built-in nextGaussian method.
@@ -77,72 +78,68 @@ public class Restaurant
      */
 	public void take_order()
 	{
-		 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		 
-		 String dish_1_input = null;
-		 String dish_2_input = null;
-		 String dish_3_input = null;
-		 String dish_4_input = null;
+		String dish_1_input = null;
+		String dish_2_input = null;
+		String dish_3_input = null;
+		String dish_4_input = null;
 		 
-	     System.out.println("Place Order: enter items to be ordered 'yes' or 'no': ");
-	     System.out.println("Soup:");
+	    System.out.println("Place Order: enter items to be ordered 'yes' or 'no': ");
+	    System.out.println("Soup:");
+	    try
+	    {
+	       dish_1_input = br.readLine();
+	    }
+	    catch (IOException ioe)
+	    {
+	       System.out.println("Error: please enter 'yes' or 'no'");
+	       System.exit(1);
+	    }
+	      
+	    System.out.println("Steak:");
+	    try
+	    {
+	       dish_2_input = br.readLine();
+	    }
+	    catch (IOException ioe)
+	    {
+	       System.out.println("Error: please enter 'yes' or 'no'");
+	       System.exit(1);
+	    }
 		
-	     try
-	     {
-	        dish_1_input = br.readLine();
-	     }
-	     catch (IOException ioe)
-	     {
-	        System.out.println("Error: please enter 'yes' or 'no'");
-	        System.exit(1);
-	     }
+	    System.out.println("Burger:");
+	    try
+	    {
+	       dish_3_input = br.readLine();
+	    }
+	    catch (IOException ioe)
+	    {
+	       System.out.println("Error: please enter 'yes' or 'no'");
+	       System.exit(1);
+	    }
 	      
-	     System.out.println("Steak:");
-			
-	     try
-	     {
-	        dish_2_input = br.readLine();
-	     }
-	     catch (IOException ioe)
-	     {
-	        System.out.println("Error: please enter 'yes' or 'no'");
-	        System.exit(1);
-	     }
-		
-	     System.out.println("Burger:");
-			
-	     try
-	     {
-	        dish_3_input = br.readLine();
-	     }
-	     catch (IOException ioe)
-	     {
-	        System.out.println("Error: please enter 'yes' or 'no'");
-	        System.exit(1);
-	     }
+	    System.out.println("Fish:");
+	    try
+	    {
+	       dish_4_input = br.readLine();
+	    }
+	    catch (IOException ioe)
+	    {
+	       System.out.println("Error: please enter 'yes' or 'no'");
+	       System.exit(1);
+	    }
 	      
-	     System.out.println("Fish:");
-			
-	     try
-	     {
-	        dish_4_input = br.readLine();
-	     }
-	     catch (IOException ioe)
-	     {
-	        System.out.println("Error: please enter 'yes' or 'no'");
-	        System.exit(1);
-	     }
-	      
-	     if(dish_1_input.equals("yes"))
-	    	 dish_1 = true; 
-	     if(dish_2_input.equals("yes"))
-	    	 dish_2 = true;
-	     if(dish_3_input.equals("yes"))
-	    	 dish_3 = true;
-	     if(dish_4_input.equals("yes"))
-	    	 dish_4 = true;
+	    if(dish_1_input.equals("yes"))
+	     dish_1 = true; 
+	    if(dish_2_input.equals("yes"))
+	     dish_2 = true;
+	    if(dish_3_input.equals("yes"))
+	     dish_3 = true;
+	    if(dish_4_input.equals("yes"))
+	     dish_4 = true;
 	       
-	     System.out.println(" ");
+	    System.out.println(" ");
 	}
 	
 	/*
