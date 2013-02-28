@@ -1,0 +1,31 @@
+18/12/12
+Initial meeting with WJK to discuss outline of project. Formulated ideas relating to main project aims and goals. Brainstorm ideas and formed an overview. Discussed requirements of program. Discussed use of different probability distributions and split between user interface/front end and back end of program, the main purposes of each section.
+
+17/01/13
+Meeting with WJK. Went into more detail regarding program structure. Presented and discussed first report and finalised a specification for the project. Discussed further requirements of the project and plan of execution.
+
+23/01/13
+Report 1 due in.
+
+24/01/13
+Began discussing specific structure of the program. Formed UML diagrams and delegated tasks between team members. TL to focus on GUI and front end, TR to focus on probability distributions, TA and PW to focus on back end structure and processes of the program. During the week: formulated pseudocode for game process and began initial coding.
+
+31/01/13
+Presented initial work to the team. Reviewed initial format of interface and prototypes of the game processes. Discussed changes to pseudocode and initial code.
+
+7/02/13
+Progress update. Further refinement of game interface and backend code.
+
+14/02/13
+Meeting with WJK. Progress update. Showed interface and work completed so far. Discussed plans for improvement and changes to the specification.
+
+20/02/13
+Report 2 due in.
+
+21/02/13
+Discussed plan of action for the completion of the project. Discussed and reformulated essential and nonessential aims of the project specification, and delegated tasks to group members.
+
+28/02/13
+
+15/03/13
+Report 3 due in.
