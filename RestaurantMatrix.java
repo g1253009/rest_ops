@@ -15,6 +15,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+
+
+
+
 // This program illustrates a simple applet with a TextField,
 
 // Panel, Button, Choice menu, and Canvas.
@@ -386,13 +390,39 @@ void create_order() {
 	else dish4showorder.setText("Items ordered: 0");
 }
 
+double delay_Norm_Dist(){ 
+    
+    double PI = 3.141592654;
+    double x,y, x_temp, y_temp;
+    double z,z1,z2;
+    
+    x = Math.random() * ( 99 - 0 );
+    y = Math.random() * (99 - 0);
+    
+    while(x == 0)
+        x = Math.random() * ( 99 - 0 );
+    while(y == 0)
+        y = Math.random() * ( 99 - 0 );
+   
+    x /= 100;
+    y /= 100;
+    
+    z1 = Math.sqrt(-2*Math.log(x))*Math.cos(2*PI*y);
+    z2 = Math.sqrt(-2*Math.log(x))*Math.sin(2*PI*y);
+    z = (z1+z2) / 2;
+    
+    return Math.abs(z);
+    
+    
+}
+
 double prepare_food(int dish_number){
 	
-	if(dish_number == 1) return 5.0;
-	else if (dish_number == 2) return 7.0;
-	else if (dish_number == 3) return 8.0;
-	else if (dish_number == 4) return 9.0;
-	else return 5.3;
+	if(dish_number == 1) return delay_Norm_Dist()*5.0;
+	else if (dish_number == 2) return delay_Norm_Dist()*7.0;
+	else if (dish_number == 3) return delay_Norm_Dist()*8.0;
+	else if (dish_number == 4) return delay_Norm_Dist()*9.0;
+	else return delay_Norm_Dist()*5.3;
 	
 }
 
