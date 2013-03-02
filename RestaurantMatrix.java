@@ -390,11 +390,12 @@ void create_order() {
 	else dish4showorder.setText("Items ordered: 0");
 }
 
-double delay_Norm_Dist(){ 
-    
+double delay_Norm_Dist(double dish_time){ 
+   double z;
+	do{
     double PI = 3.141592654;
     double x,y, x_temp, y_temp;
-    double z,z1,z2;
+    double z1,z2;
     
     x = Math.random() * ( 99 - 0 );
     y = Math.random() * (99 - 0);
@@ -410,19 +411,20 @@ double delay_Norm_Dist(){
     z1 = Math.sqrt(-2*Math.log(x))*Math.cos(2*PI*y);
     z2 = Math.sqrt(-2*Math.log(x))*Math.sin(2*PI*y);
     z = (z1+z2) / 2;
+	}while(z < 0 || z > 2.5);
     
-    return Math.abs(z);
+    return z;
     
-    
+
 }
 
 double prepare_food(int dish_number){
 	
-	if(dish_number == 1) return delay_Norm_Dist()*5.0;
-	else if (dish_number == 2) return delay_Norm_Dist()*7.0;
-	else if (dish_number == 3) return delay_Norm_Dist()*8.0;
-	else if (dish_number == 4) return delay_Norm_Dist()*9.0;
-	else return delay_Norm_Dist()*5.3;
+	if(dish_number == 1) return delay_Norm_Dist(5.0)*5.0;
+	else if (dish_number == 2) return delay_Norm_Dist(7.0)*7.0;
+	else if (dish_number == 3) return delay_Norm_Dist(8.0)*8.0;
+	else if (dish_number == 4) return delay_Norm_Dist(9.0)*9.0;
+	else return delay_Norm_Dist(5.3)*5.3;
 	
 }
 
