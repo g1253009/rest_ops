@@ -65,11 +65,22 @@ public class Restaurant
      * Uses the built-in nextGaussian method.
      * @return double
      */
-	public static double delay_Norm_Dist_2()
+	public static double norm_random_var()
 	{
 		Random generator = new Random();
 		
 		return(generator.nextGaussian());
+	}
+	
+	/*
+	 * Returns a random variable between 0 and 1.0.
+	 * @return double
+	 */
+	public static double random_var()
+	{
+		Random generator = new Random();
+		
+		return(generator.nextDouble());
 	}
 	
     /*
@@ -135,6 +146,272 @@ public class Restaurant
 	       
 	    System.out.println(" ");
 	}
+	
+	/*
+	 * Generates a random order for the head chef (player) to introduce delays for.
+	 * Each dish can be ordered only once.
+	 * @return void
+	 */
+	void generate_order()
+	{
+		double value = random_var();
+		
+		// select one dish
+		if(value >= 0 && value < 0.25)
+		{
+			double val1 = random_var();
+			
+			if(val1 >= 0 && val1 < 0.25)
+				dish[0] = true;
+			else if(val1 >= 0.25 && val1 < 0.50)
+				dish[1] = true;
+			else if(val1 >= 0.50 && val1 < 0.75)
+				dish[2] = true;
+			else
+				dish[3] = true;
+		}
+
+		// select two dishes
+		else if(value >= 0.25 && value < 0.50)
+		{
+			double val2 = random_var();
+			
+			// select the first dish
+			if(val2 >= 0 && val2 < 0.25)
+			{
+				dish[0] = true;
+				
+				double val2a = random_var();
+				
+				// select the second dish
+				if(val2a >= 0 && val2a < 0.33)
+					dish[1] = true;
+				else if(val2a >= 0.33 && val2a < 0.66)
+					dish[2] = true;
+				else
+					dish[3] = true;
+			}
+			else if(val2 >= 0.25 && val2 < 0.50)
+			{
+				dish[1] = true;
+				
+				double val2b = random_var();
+				
+				if(val2b >= 0 && val2b < 0.33)
+					dish[0] = true;
+				else if(val2b >= 0.33 && val2b < 0.66)
+					dish[2] = true;
+				else
+					dish[3] = true;
+			}
+			else if(val2 >= 0.50 && val2 < 0.75)
+			{
+				dish[2] = true;
+			
+				double val2c = random_var();
+				
+				if(val2c >= 0 && val2c < 0.33)
+					dish[0] = true;
+				else if(val2c >= 0.33 && val2c < 0.66)
+					dish[1] = true;
+				else
+					dish[3] = true;
+			}
+			else
+			{
+				dish[3] = true;
+			
+				double val2d = random_var();
+				
+				if(val2d >= 0 && val2d < 0.33)
+					dish[0] = true;
+				else if(val2d >= 0.33 && val2d < 0.66)
+					dish[1] = true;
+				else
+					dish[2] = true;
+			}
+		}
+		
+		// select three dishes
+		else if(value >= 0.50 && value < 0.75)
+		{
+			double val3 = random_var();
+			
+			// select the first dish
+			if(val3 >= 0 && val3 < 0.25)
+			{
+				dish[0] = true;
+				
+				double val3a = random_var();
+				
+				// select the second dish
+				if(val3a >= 0 && val3a < 0.33)
+				{
+					dish[1] = true;
+				
+					double val3aa = random_var();
+					
+					// select the third dish
+					if(val3aa >= 0 && val3aa < 0.50)
+						dish[2] = true;
+					else
+						dish[3] = true;
+				}
+				else if(val3a >= 0.33 && val3a < 0.66)
+				{
+					dish[2] = true;
+					
+					double val3ab = random_var();
+					
+					if(val3ab >= 0 && val3ab < 0.50)
+						dish[1] = true;
+					else
+						dish[3] = true;
+				}
+				else
+				{
+					dish[3] = true;
+					
+					double val3ac = random_var();
+					
+					if(val3ac >= 0 && val3ac < 0.50)
+						dish[1] = true;
+					else
+						dish[2] = true;
+				}
+			}
+			else if(val3 >= 0.25 && val3 < 0.50)
+			{
+				dish[1] = true;
+				
+				double val3b = random_var();
+				
+				if(val3b >= 0 && val3b < 0.33)
+				{
+					dish[0] = true;
+				
+					double val3ba = random_var();
+					
+					if(val3ba >= 0 && val3ba < 0.50)
+						dish[2] = true;
+					else
+						dish[3] = true;
+				}
+				else if(val3b >= 0.33 && val3b < 0.66)
+				{
+					dish[2] = true;
+					
+					double val3bb = random_var();
+					
+					if(val3bb >= 0 && val3bb < 0.50)
+						dish[0] = true;
+					else
+						dish[3] = true;
+				}
+				else
+				{
+					dish[3] = true;
+					
+					double val3bc = random_var();
+					
+					if(val3bc >= 0 && val3bc < 0.50)
+						dish[0] = true;
+					else
+						dish[2] = true;
+				}
+			}
+			else if(val3 >= 0.50 && val3 < 0.75)
+			{
+				dish[2] = true;
+			
+				double val3c = random_var();
+				
+				if(val3c >= 0 && val3c < 0.33)
+				{
+					dish[0] = true;
+					
+					double val3ca = random_var();
+					
+					if(val3ca >= 0 && val3ca < 0.50)
+						dish[1] = true;
+					else
+						dish[3] = true;
+				}	
+				else if(val3c >= 0.33 && val3c < 0.66)
+				{
+					dish[1] = true;
+					
+					double val3cb = random_var();
+					
+					if(val3cb >= 0 && val3cb < 0.50)
+						dish[0] = true;
+					else
+						dish[3] = true;
+				}
+				else
+				{
+					dish[3] = true;
+					
+					double val3cc = random_var();
+					
+					if(val3cc >= 0 && val3cc < 0.50)
+						dish[0] = true;
+					else
+						dish[1] = true;
+				}
+			}
+			else
+			{
+				dish[3] = true;
+			
+				double val3d = random_var();
+				
+				if(val3d >= 0 && val3d < 0.33)
+				{
+					dish[0] = true;
+					
+					double val3da = random_var();
+					
+					if(val3da >= 0 && val3da < 0.50)
+						dish[1] = true;
+					else
+						dish[2] = true;
+				}
+				else if(val3d >= 0.33 && val3d < 0.66)
+				{
+					dish[1] = true;
+					
+					double val3db = random_var();
+					
+					if(val3db >= 0 && val3db < 0.50)
+						dish[0] = true;
+					else
+						dish[2] = true;
+				}
+				else
+				{
+					dish[2] = true;
+					
+					double val3dc = random_var();
+					
+					if(val3dc >= 0 && val3dc < 0.50)
+						dish[0] = true;
+					else
+						dish[1] = true;
+				}
+			}
+		}
+		
+		// select four dishes
+		else
+		{
+			for(int i = 0; i < dish.length; i++)
+			{
+				dish[i] = true;
+			}
+		}
+	}
+	
 	
 	/*
 	 * Prints out the confirmed order to the screen.
@@ -267,7 +544,7 @@ public class Restaurant
 	public void food_prep()
 	{
 		// Preparation time is a constant plus a random delay.
-		double delay = delay_Norm_Dist_2();
+		double delay = norm_random_var();
 		dish_prep[0] = 2 + delay;
 		dish_prep[1] = 5 + delay;
 		dish_prep[2] = 10 + delay;
@@ -427,7 +704,8 @@ public class Restaurant
 		while(play_game.equals("yes"))
 		{	
 			Restaurant table_1 = new Restaurant(1);
-			table_1.take_order();
+			//table_1.take_order();
+			table_1.generate_order();
 			//table_1.confirm_order();
 			table_1.head_chef_delay();		
 			table_1.food_prep();	
