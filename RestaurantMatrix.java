@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.*;
+import java.security.Timestamp;
+import java.util.Date;
+import java.util.Random;
 import java.io.*;
 import java.applet.*;
 
@@ -16,27 +19,44 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 
-
-
-
-// This program illustrates a simple applet with a TextField,
-
-// Panel, Button, Choice menu, and Canvas.
 public class RestaurantMatrix extends Applet  {
-TextField tf, dish1showorder, dish2showorder, dish3showorder, dish4showorder,
-scoredish1, scoredish2, scoredish3, scoredish4;
+TextField tf, 
+scoretime, scoredispersion, scoretemp, scoretotal,
+dish1showorder, dish2showorder, dish3showorder, dish4showorder,
+table2_dish1showorder, table2_dish2showorder, table2_dish3showorder, table2_dish4showorder,
+table3_dish1showorder, table3_dish2showorder, table3_dish3showorder, table3_dish4showorder,
+table4_dish1showorder, table4_dish2showorder, table4_dish3showorder, table4_dish4showorder,
+scoredish1, scoredish2, scoredish3, scoredish4,
+table2_scoredish1, table2_scoredish2, table2_scoredish3, table2_scoredish4,
+table3_scoredish1, table3_scoredish2, table3_scoredish3, table3_scoredish4,
+table4_scoredish1, table4_scoredish2, table4_scoredish3, table4_scoredish4,
+dish1status, dish2status,dish3status,dish4status,
+table2_dish1status, table2_dish2status,table2_dish3status,table2_dish4status,
+table3_dish1status, table3_dish2status,table3_dish3status,table3_dish4status,
+table4_dish1status, table4_dish2status,table4_dish3status,table4_dish4status;
 DrawCanvas c;
 Button drawBtn;
-//Button preparedish1;
 Choice ch;
-// Add the Components to the screen...
 
-boolean dish_1, dish_2, dish_3, dish_4;
+int size = 35;
+boolean[] order_status = new boolean[size];
 
+boolean[] scoreboard_status = new boolean[4];
+
+double[] dish_time = new double[size];
+
+int[] score_board = new int[25];
+
+int table_interval, table_number, total_dishes;
+
+java.util.Date date_table1, date_table2, date_table3, date_table4;
 
 public void init() {
 
- // Set up display area...
+ table_interval = 7;
+ table_number = 1;
+	
+	// Set up display area...
  resize(900,600);
   
  int rows = 0;
@@ -44,39 +64,100 @@ public void init() {
  setLayout(new GridLayout(rows,columns,5,5)); 
  setFont(new Font("Calibri", Font.BOLD, 10));
  setBackground(new Color(85,153,187)); 
- //setBorder(BorderFactory.createEmptyBorder(70, 70, 70, 70));
-
- 
- //SET Header rows - play game and scoreboard
- 
+  
  final Button playgame = new Button("CLICK to PLAY");
  add(playgame);
  
  playgame.addActionListener(new ActionListener(){
 	 public void actionPerformed(ActionEvent e){
-		 //gamestatus.setText("PLAY");
+		 
 		 playgame.setBackground(Color.GREEN);
-		 //Define order creation method
-		//table table_1 = new table(1);
 		 
-		 //RestaurantMatrix table_1 = new RestaurantMatrix();
+		 ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	               
+	            	create_order(table_number);
+	            	
+	            	date_table1= new java.util.Date();
+	           
+	            }};
+	      
+	        Timer timer = new Timer( (int) (1000) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 		 
-		 create_order();
-		 
-	 }
+	        
+		 ActionListener taskPerformer2 = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	               
+	            	if (table_number < 4) table_number++;
+	            	else table_number = 1;
+	            
+	            	create_order(table_number);
+	            	
+	            	if (table_number == 1) date_table1 = new java.util.Date();
+	            	else if (table_number == 2) date_table2 = new java.util.Date();
+	            	else if (table_number == 3) date_table3 = new java.util.Date();
+	            	else if (table_number == 4) date_table4 = new java.util.Date();
+	            	
+	            }};
+	      
+	        Timer timer2 = new Timer( (int) (1000*table_interval) , taskPerformer2);
+	        timer2.setRepeats(true);
+	        timer2.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
+      
+	        
+	         ActionListener taskPerformer3 = new ActionListener() {
+     public void actionPerformed(ActionEvent evt) {
+        
+     	if (order_status[16] && order_status[17] && order_status[18] && order_status[19] && !scoreboard_status[0]){
+     		
+     		score(1);
+     		score_board(1);
+     	}
+     	
+     	if (order_status[20] && order_status[21] && order_status[22] && order_status[23] && !scoreboard_status[1]){
+     		
+     		score(2);
+     		score_board(2);
+     	}
+     	
+     	if (order_status[24] && order_status[25] && order_status[26] && order_status[27] && !scoreboard_status[2]){
+     		
+     		score(3);
+     		score_board(3);
+     	}
+
+     	if (order_status[28] && order_status[29] && order_status[30] && order_status[31] && !scoreboard_status[3]){
+		
+		score(4);
+		score_board(4);
+     	}
+     	
+     }
+     };
+
+ Timer timer3 = new Timer( 50 , taskPerformer3);
+ timer3.setRepeats(true);
+ timer3.start();
+ try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
+	 }//End of play game ActionListener
  });
  
  
- TextField scoretime = new TextField("SCORE - Time: TBC");
+ //SET Header rows - play game and scoreboard
+ scoretime = new TextField("SCORE - Time: TBC");
  add(scoretime);
  scoretime.setBackground(Color.yellow);
- TextField scoredispersion = new TextField("SCORE - Dispersion: TBC");
+ scoredispersion = new TextField("SCORE - Dispersion: TBC");
  add(scoredispersion);
  scoredispersion.setBackground(Color.yellow);
- TextField scoretemp = new TextField("SCORE - Temperature: TBC");
+ scoretemp = new TextField("SCORE - Temperature: TBC");
  add(scoretemp);
  scoretemp.setBackground(Color.yellow);
- TextField scoretotal = new TextField("SCORE Score: TBC");
+ scoretotal = new TextField("SCORE Score: TBC");
  add(scoretotal);
  scoretotal.setBackground(Color.yellow);
  TextField computerscore = new TextField("COMPUTER SCORE: TBC");
@@ -84,14 +165,10 @@ public void init() {
  computerscore.setBackground(Color.yellow);
  
  //Matrix headings
- //menuoptions.setBounds(5, 5, 100, 100);
- //menuoptions.setPreferredSize(new Dimension(80,20));
-
- 
  TextField menuoptions = new TextField("MENU OPTIONS");
  add(menuoptions);
  menuoptions.setBackground(Color.GRAY);
- 
+
  TextField expecteddtime = new TextField("EXPECTED TIME");
  add(expecteddtime);
  expecteddtime.setBackground(Color.GRAY);
@@ -112,67 +189,214 @@ public void init() {
  add(customerscore);
  customerscore.setBackground(Color.GRAY);
  
- //Line entries - dish - 1
+ //SET-UP TABLE 1
+ //Line entries - dish - 1 - Table 1
  add(new TextField("Table 1 - Soup"));
  add(new TextField("2 seconds"));
  dish1showorder = new TextField("0");
  add(dish1showorder);
  Button preparedish1 = new Button("CLICK to prepare");
  add(preparedish1);
- final TextField dish1status = new TextField("Prepared/Ready");
+ dish1status = new TextField("Prepared/Ready");
  add(dish1status);
  scoredish1 = new TextField("SCORE - Time: TBC");
  add(scoredish1);
  
- //Line entries - dish - 2
+ //Line entries - dish - 2 - Table 1
  add(new TextField("Table 1 - Steak"));
- add(new TextField("4 seconds"));
+ add(new TextField("5 seconds"));
  dish2showorder = new TextField("0");
  add(dish2showorder);
  Button preparedish2 = new Button("CLICK to prepare");
  add(preparedish2);
- final TextField dish2status = new TextField("Prepared/Ready");
+ dish2status = new TextField("Prepared/Ready");
  add(dish2status);
  scoredish2 = new TextField("SCORE - Dispersion: TBC");
  add(scoredish2);
  
-//Line entries - dish - 3
+//Line entries - dish - 3 - Table 1
 add(new TextField("Table 1 - Burger"));
 add(new TextField("10 seconds"));
 dish3showorder = new TextField("0");
 add(dish3showorder);
 Button preparedish3 = new Button("CLICK to prepare");
 add(preparedish3);
-final TextField dish3status = new TextField("Prepared/Ready");
+dish3status = new TextField("Prepared/Ready");
 add(dish3status);
 scoredish3 = new TextField("SCORE - Temperature: TBC");
 add(scoredish3); 
 
-//Line entries - dish - 4
+//Line entries - dish - 4 - Table 1
 add(new TextField("Table 1 - Fish"));
-add(new TextField("10 seconds"));
+add(new TextField("15 seconds"));
 dish4showorder = new TextField("0");
 add(dish4showorder);
 Button preparedish4 = new Button("CLICK to prepare");
 add(preparedish4);
-final TextField dish4status = new TextField("Prepared/Ready");
+dish4status = new TextField("Prepared/Ready");
 add(dish4status);
 scoredish4 = new TextField("SCORE - Total: TBC");
 add(scoredish4);
 
+//SET-UP TABLE 2
+//Line entries - dish - 1 - table 2
+add(new TextField("Table 2 - Soup"));
+add(new TextField("2 seconds"));
+table2_dish1showorder = new TextField("0");
+add(table2_dish1showorder);
+Button table2_preparedish1 = new Button("CLICK to prepare");
+add(table2_preparedish1);
+table2_dish1status = new TextField("Prepared/Ready");
+add(table2_dish1status);
+table2_scoredish1 = new TextField("SCORE - Time: TBC");
+add(table2_scoredish1);
 
-//add(new TextField("Table 2"));
-for (int i = 0; i < 72; ++i) {
-	  add(new TextField("Being Developed"));
-	 }
+//Line entries - dish - 2 - table 2
+add(new TextField("Table 2 - Steak"));
+add(new TextField("5 seconds"));
+table2_dish2showorder = new TextField("0");
+add(table2_dish2showorder);
+Button table2_preparedish2 = new Button("CLICK to prepare");
+add(table2_preparedish2);
+table2_dish2status = new TextField("Prepared/Ready");
+add(table2_dish2status);
+table2_scoredish2 = new TextField("SCORE - Dispersion: TBC");
+add(table2_scoredish2);
+
+//Line entries - dish - 3 - table 2
+add(new TextField("Table 2 - Burger"));
+add(new TextField("10 seconds"));
+table2_dish3showorder = new TextField("0");
+add(table2_dish3showorder);
+Button table2_preparedish3 = new Button("CLICK to prepare");
+add(table2_preparedish3);
+table2_dish3status = new TextField("Prepared/Ready");
+add(table2_dish3status);
+table2_scoredish3 = new TextField("SCORE - Temperature: TBC");
+add(table2_scoredish3); 
+
+//Line entries - dish - 4 - table 2
+add(new TextField("Table 2 - Fish"));
+add(new TextField("15 seconds"));
+table2_dish4showorder = new TextField("0");
+add(table2_dish4showorder);
+Button table2_preparedish4 = new Button("CLICK to prepare");
+add(table2_preparedish4);
+table2_dish4status = new TextField("Prepared/Ready");
+add(table2_dish4status);
+table2_scoredish4 = new TextField("SCORE - Total: TBC");
+add(table2_scoredish4);
+
+//SET-UP TABLE 3
+//Line entries - dish - 1 - table 3
+add(new TextField("Table 3 - Soup"));
+add(new TextField("2 seconds"));
+table3_dish1showorder = new TextField("0");
+add(table3_dish1showorder);
+Button table3_preparedish1 = new Button("CLICK to prepare");
+add(table3_preparedish1);
+table3_dish1status = new TextField("Prepared/Ready");
+add(table3_dish1status);
+table3_scoredish1 = new TextField("SCORE - Time: TBC");
+add(table3_scoredish1);
+
+//Line entries - dish - 2 - table 3
+add(new TextField("Table 3 - Steak"));
+add(new TextField("5 seconds"));
+table3_dish2showorder = new TextField("0");
+add(table3_dish2showorder);
+Button table3_preparedish2 = new Button("CLICK to prepare");
+add(table3_preparedish2);
+table3_dish2status = new TextField("Prepared/Ready");
+add(table3_dish2status);
+table3_scoredish2 = new TextField("SCORE - Dispersion: TBC");
+add(table3_scoredish2);
+
+//Line entries - dish - 3 - table 3
+add(new TextField("Table 3 - Burger"));
+add(new TextField("10 seconds"));
+table3_dish3showorder = new TextField("0");
+add(table3_dish3showorder);
+Button table3_preparedish3 = new Button("CLICK to prepare");
+add(table3_preparedish3);
+table3_dish3status = new TextField("Prepared/Ready");
+add(table3_dish3status);
+table3_scoredish3 = new TextField("SCORE - Temperature: TBC");
+add(table3_scoredish3); 
+
+//Line entries - dish - 4 - table 3
+add(new TextField("Table 3 - Fish"));
+add(new TextField("15 seconds"));
+table3_dish4showorder = new TextField("0");
+add(table3_dish4showorder);
+Button table3_preparedish4 = new Button("CLICK to prepare");
+add(table3_preparedish4);
+table3_dish4status = new TextField("Prepared/Ready");
+add(table3_dish4status);
+table3_scoredish4 = new TextField("SCORE - Total: TBC");
+add(table3_scoredish4);
 
 
+//SET-UP TABLE 4
+//Line entries - dish - 1 - table 4
+add(new TextField("Table 4 - Soup"));
+add(new TextField("2 seconds"));
+table4_dish1showorder = new TextField("0");
+add(table4_dish1showorder);
+Button table4_preparedish1 = new Button("CLICK to prepare");
+add(table4_preparedish1);
+table4_dish1status = new TextField("Prepared/Ready");
+add(table4_dish1status);
+table4_scoredish1 = new TextField("SCORE - Time: TBC");
+add(table4_scoredish1);
+
+//Line entries - dish - 2 - table 4
+add(new TextField("Table 4 - Steak"));
+add(new TextField("5 seconds"));
+table4_dish2showorder = new TextField("0");
+add(table4_dish2showorder);
+Button table4_preparedish2 = new Button("CLICK to prepare");
+add(table4_preparedish2);
+table4_dish2status = new TextField("Prepared/Ready");
+add(table4_dish2status);
+table4_scoredish2 = new TextField("SCORE - Dispersion: TBC");
+add(table4_scoredish2);
+
+//Line entries - dish - 3 - table 4
+add(new TextField("Table 4 - Burger"));
+add(new TextField("10 seconds"));
+table4_dish3showorder = new TextField("0");
+add(table4_dish3showorder);
+Button table4_preparedish3 = new Button("CLICK to prepare");
+add(table4_preparedish3);
+table4_dish3status = new TextField("Prepared/Ready");
+add(table4_dish3status);
+table4_scoredish3 = new TextField("SCORE - Temperature: TBC");
+add(table4_scoredish3); 
+
+//Line entries - dish - 4 - table 4
+add(new TextField("Table 4 - Fish"));
+add(new TextField("15 seconds"));
+table4_dish4showorder = new TextField("0");
+add(table4_dish4showorder);
+Button table4_preparedish4 = new Button("CLICK to prepare");
+add(table4_preparedish4);
+table4_dish4status = new TextField("Prepared/Ready");
+add(table4_dish4status);
+table4_scoredish4 = new TextField("SCORE - Total: TBC");
+add(table4_scoredish4);
+
+
+//TABLE 1 - Prepare Dish button actions:
  preparedish1.addActionListener(new ActionListener(){
 	 public void actionPerformed(ActionEvent e){
-		 if(dish_1){
+		 if(order_status[0]){
 			 dish1status.setText("Being Prepared");
 			 dish1status.setBackground(Color.GREEN);
-			 
+			 order_status[0] = false;
+			 order_status[16] = false;
+			 dish1showorder.setText("Items waiting: 0");
+		                dish1showorder.setBackground(Color.white);
 			 
 			 final double wait_time = prepare_food(1);
 	 
@@ -180,122 +404,91 @@ for (int i = 0; i < 72; ++i) {
 		            public void actionPerformed(ActionEvent evt) {
 		                dish1status.setText("Dish is ready");
 		                dish1status.setBackground(Color.gray);
+		                order_status[16] = true;
 		                
-		                
-		                int custScore = score(wait_time);
-		                
-		                scoredish1.setText("SCORE - Time: " + custScore);
-		                
-		                if (custScore <= 40)
-		                scoredish1.setBackground(Color.red);
-		                else if (custScore > 40 && custScore <= 70)
-		                scoredish1.setBackground(Color.orange);
-		                else if (custScore > 70)
-			            scoredish1.setBackground(Color.green);
-		            }
-		            };
+		                Date date = new java.util.Date();
+		                dish_time[0] =  (date.getTime() - date_table1.getTime())/1000;
+		               
+		            }};
 		      
 		        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
 		        timer.setRepeats(false);
 		        timer.start();
-		        try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+		        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 		 
 		 }}
  });
  
  preparedish2.addActionListener(new ActionListener(){
 	 public void actionPerformed(ActionEvent e){
-		 if(dish_2){
+		 if(order_status[1]){
 			 dish2status.setText("Being Prepared");
-		 dish2status.setBackground(Color.GREEN);
-		 
+			 dish2status.setBackground(Color.GREEN);
+			 order_status[1] = false;
+			 order_status[17] = false;
+			 dish2showorder.setText("Items waiting: 0");
+		     dish2showorder.setBackground(Color.white);
+	                
 		 final double wait_time = prepare_food(2);
 		 
 		 ActionListener taskPerformer = new ActionListener() {
 	            public void actionPerformed(ActionEvent evt) {
 	                dish2status.setText("Dish is ready");
 	                dish2status.setBackground(Color.gray);
+	                order_status[17] = true;
 	                
-	                int custScore = score(wait_time);
-	                
-	                scoredish2.setText("SCORE - Dispersion: " + custScore);
-	                
-	                if (custScore <= 40)
-	                scoredish2.setBackground(Color.red);
-	                else if (custScore > 40 && custScore <= 70)
-	                scoredish2.setBackground(Color.orange);
-	                else if (custScore > 70)
-		            scoredish2.setBackground(Color.green);
-	            
-	            }
-	            };
-	         
-	            
+	                Date date = new java.util.Date();
+	                dish_time[1] =  (date.getTime() - date_table1.getTime())/1000;
+	              
+	            }};
 	            
 	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
 	        timer.setRepeats(false);
 	        timer.start();
-	        try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 	 }}
  });
  
 
  preparedish3.addActionListener(new ActionListener(){
 	 public void actionPerformed(ActionEvent e){
-		 if(dish_3){
+		 if(order_status[2]){
 			 dish3status.setText("Being Prepared");	 
 		 dish3status.setBackground(Color.GREEN);
-		 
+		 order_status[2] = false;
+		 order_status[18] = false;
+		 dish3showorder.setText("Items waiting: 0");
+	     dish3showorder.setBackground(Color.white);
+
 		  final double wait_time = prepare_food(3);
 		 
 		  ActionListener taskPerformer = new ActionListener() {
 	            public void actionPerformed(ActionEvent evt) {
 	                dish3status.setText("Dish is ready");
 	                dish3status.setBackground(Color.gray);
+	                order_status[18] = true;
 	                
-	                int custScore = score(wait_time);
-	                
-	                scoredish3.setText("Score: " + custScore);
-	                
-	                if (custScore <= 40)
-	                scoredish3.setBackground(Color.red);
-	                else if (custScore > 40 && custScore <= 70)
-	                scoredish3.setBackground(Color.orange);
-	                else if (custScore > 70)
-		            scoredish3.setBackground(Color.green);
+	                Date date = new java.util.Date();
+	                dish_time[2] =  (date.getTime() - date_table1.getTime())/1000;
+	               
+	            }};
 	           
-	            }
-	            };
-	         
-	           
-	            
 	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
 	        timer.setRepeats(false);
 	        timer.start();
-	        try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 	 }}
  });
  
  preparedish4.addActionListener(new ActionListener(){
 	 public void actionPerformed(ActionEvent e){
-if (dish_4){		
+if (order_status[3]){		
 		 dish4status.setText("Being Prepared");
 		 dish4status.setBackground(Color.GREEN);
+		 order_status[3] = false;
+		 order_status[19] = false;
+		 dish4showorder.setText("Items waiting: 0");
+	     dish4showorder.setBackground(Color.white);
 		 
 		 final double wait_time = prepare_food(4);
 		 
@@ -304,23 +497,141 @@ if (dish_4){
 	            public void actionPerformed(ActionEvent evt) {
 	                dish4status.setText("Dish is ready");
 	                dish4status.setBackground(Color.gray);
+	                order_status[19] = true;
 	                
-	                int custScore = score(wait_time);
+	                Date date = new java.util.Date();
+	                dish_time[3] =  (date.getTime() - date_table1.getTime())/1000;
+	              
+	            }};
+	        
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		  
+		}	 
+	 }
+ });
+ 
+
+//TABLE 2 - Prepare Dish button actions:
+table2_preparedish1.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[4]){
+			 table2_dish1status.setText("Being Prepared");
+			 table2_dish1status.setBackground(Color.GREEN);
+			 order_status[4] = false;
+			 order_status[20] = false;
+			 table2_dish1showorder.setText("Items waiting: 0");
+		            	table2_dish1showorder.setBackground(Color.white);
+		            	
+			 final double wait_time = prepare_food(1);
+	 
+			 ActionListener taskPerformer = new ActionListener() {
+		            public void actionPerformed(ActionEvent evt) {
+		            	table2_dish1status.setText("Dish is ready");
+		            	table2_dish1status.setBackground(Color.gray);
+		            	order_status[20] = true;
+		       
+		            	Date date = new java.util.Date();
+		                dish_time[4] =  (date.getTime() - date_table2.getTime())/1000;
+		            	
+		            }};
+		      
+		        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+		        timer.setRepeats(false);
+		        timer.start();
+		        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		 
+		 }}
+});
+
+table2_preparedish2.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[5]){
+			 table2_dish2status.setText("Being Prepared");
+			 table2_dish2status.setBackground(Color.GREEN);
+			 order_status[5] = false;
+			 order_status[21] = false;
+		 table2_dish2showorder.setText("Items waiting: 0");
+	            	table2_dish2showorder.setBackground(Color.white);
+	            	
+		 final double wait_time = prepare_food(2);
+		 
+		 ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	table2_dish2status.setText("Dish is ready");
+	            	table2_dish2status.setBackground(Color.gray);
+	            	order_status[21] = true;
 	                
-	                scoredish4.setText("Score: " + custScore);
-	                
-	                if (custScore <= 40)
-	                scoredish4.setBackground(Color.red);
-	                else if (custScore > 40 && custScore <= 70)
-	                scoredish4.setBackground(Color.orange);
-	                else if (custScore > 70)
-		            scoredish4.setBackground(Color.green);
-	                
-	            }
-	            };
-	         
+	            	Date date = new java.util.Date();
+	                dish_time[5] =  (date.getTime() - date_table2.getTime())/1000;
+	            	
+	            }};
 	            
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+	 }}
+});
+
+
+table2_preparedish3.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[6]){
+			 table2_dish3status.setText("Being Prepared");	 
+			 table2_dish3status.setBackground(Color.GREEN);
+			 order_status[6] = false; 
+			 order_status[22] = false;
+			 table2_dish3showorder.setText("Items waiting: 0");
+         	table2_dish3showorder.setBackground(Color.white);
+			 
+			 
+		  final double wait_time = prepare_food(3);
+		 
+		  ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	table2_dish3status.setText("Dish is ready");
+	            	table2_dish3status.setBackground(Color.gray);
+	            	order_status[22] = true;
+	            	
+	            	Date date = new java.util.Date();
+	                dish_time[6] =  (date.getTime() - date_table2.getTime())/1000;
 	            
+	            }};
+	            
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+	 }}
+});
+
+table2_preparedish4.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+if (order_status[7]){		
+	table2_dish4status.setText("Being Prepared");
+	table2_dish4status.setBackground(Color.GREEN);
+	order_status[7] = false;
+	order_status[23] = false;
+	 table2_dish4showorder.setText("Items waiting: 0");
+ 	table2_dish4showorder.setBackground(Color.white);	 
+	
+		 final double wait_time = prepare_food(4);
+		 
+		 ActionListener taskPerformer = new ActionListener() {
+	          
+	            public void actionPerformed(ActionEvent evt) {
+	            	table2_dish4status.setText("Dish is ready");
+	            	table2_dish4status.setBackground(Color.gray);
+	            	order_status[23] = true;
+	            	
+	            	Date date = new java.util.Date();
+	                dish_time[7] =  (date.getTime() - date_table2.getTime())/1000;
+	            	
+	            }};
+	        
 	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
 	        timer.setRepeats(false);
 	        timer.start();
@@ -333,108 +644,683 @@ if (dish_4){
 		  
 		}	 
 	 }
- });
- 
+});
 
- 
- 
- //setLayout(new BorderLayout());
+//TABLE 3 - Prepare Dish button actions:
+table3_preparedish1.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[8]){
+			 table3_dish1status.setText("Being Prepared");
+			 table3_dish1status.setBackground(Color.GREEN);
+			 order_status[8] = false;
+			 order_status[24] = false;
+			 table3_dish1showorder.setText("Items waiting: 0");
+		            	table3_dish1showorder.setBackground(Color.white);
+			 final double wait_time = prepare_food(1);
+	 
+			 ActionListener taskPerformer = new ActionListener() {
+		            public void actionPerformed(ActionEvent evt) {
+		            	table3_dish1status.setText("Dish is ready");
+		            	table3_dish1status.setBackground(Color.gray);
+		            	order_status[24] = true;
+		               
+		            	Date date = new java.util.Date();
+		                dish_time[8] =  (date.getTime() - date_table3.getTime())/1000;
+		            	
+		            }};
+		      
+		        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+		        timer.setRepeats(false);
+		        timer.start();
+		        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		 
+		 }}
+});
 
- // Add the components...
- // Add the text at the top.
-// tf = new TextField();
-// add("North",tf);
+table3_preparedish2.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[9]){
+			 table3_dish2status.setText("Being Prepared");
+			 table3_dish2status.setBackground(Color.GREEN);
+			 order_status[9] = false;
+			 order_status[25] = false;
+		 table3_dish2showorder.setText("Items waiting: 0");
+	            	table3_dish2showorder.setBackground(Color.white);
+	            	
+		 final double wait_time = prepare_food(2);
+		 
+		 ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	table3_dish2status.setText("Dish is ready");
+	            	table3_dish2status.setBackground(Color.gray);
+	            	order_status[25] = true;
+	                
+	            	Date date = new java.util.Date();
+	                dish_time[9] =  (date.getTime() - date_table3.getTime())/1000;
+	            	
+	            }};
+	           
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+	 }}
+});
 
- // Add the custom Canvas to the center
- //c = new DrawCanvas(this);
- //add("Center",c);
+
+table3_preparedish3.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[10]){
+			 table3_dish3status.setText("Being Prepared");	 
+			 table3_dish3status.setBackground(Color.GREEN);
+			 order_status[10] = false;
+			 order_status[26] = false;
+			 table3_dish3showorder.setText("Items waiting: 0");
+         	table3_dish3showorder.setBackground(Color.white);
+			 
+			 
+		  final double wait_time = prepare_food(3);
+		 
+		  ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	table3_dish3status.setText("Dish is ready");
+	            	table3_dish3status.setBackground(Color.gray);
+	            	order_status[26] = true;
+	               
+	            	Date date = new java.util.Date();
+	                dish_time[10] =  (date.getTime() - date_table3.getTime())/1000;
+	            	
+	            }};
+	   
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+	 }}
+});
+
+table3_preparedish4.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+if (order_status[11]){		
+	table3_dish4status.setText("Being Prepared");
+	table3_dish4status.setBackground(Color.GREEN);
+	order_status[11] = false;
+	order_status[27] = false;
+	 table3_dish4showorder.setText("Items waiting: 0");
+ 	table3_dish4showorder.setBackground(Color.white);	 
+	
+		 final double wait_time = prepare_food(4);
+		 
+		 ActionListener taskPerformer = new ActionListener() {
+	          
+	            public void actionPerformed(ActionEvent evt) {
+	            	table3_dish4status.setText("Dish is ready");
+	            	table3_dish4status.setBackground(Color.gray);
+	            	order_status[27] = true;
+	             	
+	            	Date date = new java.util.Date();
+	                dish_time[11] =  (date.getTime() - date_table3.getTime())/1000;
+	            	
+	            }};
+	        
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		  
+		}	 
+	 }
+});
+
+//TABLE 4 - Prepare Dish button actions:
+table4_preparedish1.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[12]){
+			 table4_dish1status.setText("Being Prepared");
+			 table4_dish1status.setBackground(Color.GREEN);
+			 order_status[12] = false;
+			 order_status[28] = false;
+			 table4_dish1showorder.setText("Items waiting: 0");
+		            	table4_dish1showorder.setBackground(Color.white);
+		            	
+			 final double wait_time = prepare_food(1);
+	 
+			 ActionListener taskPerformer = new ActionListener() {
+		            public void actionPerformed(ActionEvent evt) {
+		            	table4_dish1status.setText("Dish is ready");
+		            	table4_dish1status.setBackground(Color.gray);
+		            	order_status[28] = true;
+		       
+		            	Date date = new java.util.Date();
+		                dish_time[12] =  (date.getTime() - date_table4.getTime())/1000;
+		            	
+		            }};
+		      
+		        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+		        timer.setRepeats(false);
+		        timer.start();
+		        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		 
+		 }}
+});
+
+table4_preparedish2.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[13]){
+			 table4_dish2status.setText("Being Prepared");
+			 table4_dish2status.setBackground(Color.GREEN);
+			 order_status[13] = false;
+			 order_status[29] = false;
+		 table4_dish2showorder.setText("Items waiting: 0");
+	            	table4_dish2showorder.setBackground(Color.white);
+	            	
+		 final double wait_time = prepare_food(2);
+		 
+		 ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	table4_dish2status.setText("Dish is ready");
+	            	table4_dish2status.setBackground(Color.gray);
+	            	order_status[29] = true;
+	                
+	            	Date date = new java.util.Date();
+	                dish_time[13] =  (date.getTime() - date_table4.getTime())/1000;
+	            
+	            }};
+	            
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+	 }}
+});
+
+
+table4_preparedish3.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+		 if(order_status[14]){
+			 table4_dish3status.setText("Being Prepared");	 
+			 table4_dish3status.setBackground(Color.GREEN);
+			 order_status[14] = false;
+			 order_status[30] = false;
+			 table4_dish3showorder.setText("Items waiting: 0");
+         	table4_dish3showorder.setBackground(Color.white);
+		 
+		  final double wait_time = prepare_food(3);
+		 
+		  ActionListener taskPerformer = new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	table4_dish3status.setText("Dish is ready");
+	            	table4_dish3status.setBackground(Color.gray);
+	            	order_status[30] = true;
+	               
+	            	Date date = new java.util.Date();
+	                dish_time[14] =  (date.getTime() - date_table4.getTime())/1000;
+	            	
+	            }};
+	         
+	          
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+	 }}
+});
+
+table4_preparedish4.addActionListener(new ActionListener(){
+	 public void actionPerformed(ActionEvent e){
+if (order_status[15]){		
+	table4_dish4status.setText("Being Prepared");
+	table4_dish4status.setBackground(Color.GREEN);
+	order_status[15] = false;
+	order_status[31] = false;
+	table4_dish4showorder.setText("Items waiting: 0");
+	table4_dish4showorder.setBackground(Color.white);	 
+	
+	
+		 final double wait_time = prepare_food(4);
+		 
+		 ActionListener taskPerformer = new ActionListener() {
+	          
+	            public void actionPerformed(ActionEvent evt) {
+	            	table4_dish4status.setText("Dish is ready");
+	            	table4_dish4status.setBackground(Color.gray);
+	            	order_status[31] = true;
+	                
+	            	Date date = new java.util.Date();
+	                dish_time[15] =  (date.getTime() - date_table4.getTime())/1000;
+	            	
+	            }};
+	        
+	        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+	        timer.setRepeats(false);
+	        timer.start();
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		  
+		}	 
+	 }
+});
  
- // Create the panel with button and choices at the bottom...
- /*Panel p = new Panel();
- drawBtn = new Button("Play Options");
- p.add(drawBtn);
- // Create the choice box and add the options...
- ch = new Choice();
- ch.addItem("Play Game");
- ch.addItem("Stop Game");
- p.add(ch);
- add("North",p);*/
 }
 
-void create_order() {
-	// TODO Auto-generated method stub
+void create_order(int order_number) {
 	
-	dish_1 = true;
-	dish_2 = true;
-	dish_3 = false;
-	dish_4 = false;	
+	if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-4] = true;
+	if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-3] = true;
+	if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-2] = true;
+	if (!order_status[order_number*4-4] && !order_status[order_number*4-3] && !order_status[order_number*4-2])
+		order_status[order_number*4-1] = true;
+	else if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-1] = true;
 	
-	if(dish_1){
+	
+	if (order_number == 1){
+		
+	scoreboard_status[0] = false;
+		
+	if(order_status[0]){
 	dish1showorder.setText("Items ordered: 1");
-	dish1showorder.setBackground(Color.GREEN);} 
-	else dish1showorder.setText("Items ordered: 0");
+	dish1showorder.setBackground(Color.GREEN);
+	dish1status.setText("Prepared/Ready");
+	dish1status.setBackground(Color.white);} 
+	else {
+		dish1showorder.setText("Items ordered: 0");
+		order_status[16] = true;
+	}
 	
-	if(dish_2){
+	if(order_status[1]){
 	 dish2showorder.setText("Items ordered: 1");
-	 dish2showorder.setBackground(Color.GREEN);}
-	else dish2showorder.setText("Items ordered: 1");
+	 dish2showorder.setBackground(Color.GREEN);
+	 dish2status.setText("Prepared/Ready");
+		dish2status.setBackground(Color.white);}
+	else {
+		dish2showorder.setText("Items ordered: 0");
+		order_status[17] = true;
+	}
 	
-	if(dish_3){
-	 dish3showorder.setText("Items ordered: 0");
-	 dish3showorder.setBackground(Color.GREEN);}
-	else dish3showorder.setText("Items ordered: 0");
+	if(order_status[2]){
+	 dish3showorder.setText("Items ordered: 1");
+	 dish3showorder.setBackground(Color.GREEN);
+	 dish3status.setText("Prepared/Ready");
+		dish3status.setBackground(Color.white);}
+	else{
+		dish3showorder.setText("Items ordered: 0");
+		order_status[18] = true;
+	}
 	
-	if(dish_4){
-	 dish4showorder.setText("Items ordered: 0");
-	 dish4showorder.setBackground(Color.GREEN);}
-	else dish4showorder.setText("Items ordered: 0");
-}
-
-double delay_Norm_Dist(double dish_time){ 
-   double z;
-	do{
-    double PI = 3.141592654;
-    double x,y, x_temp, y_temp;
-    double z1,z2;
-    
-    x = Math.random() * ( 99 - 0 );
-    y = Math.random() * (99 - 0);
-    
-    while(x == 0)
-        x = Math.random() * ( 99 - 0 );
-    while(y == 0)
-        y = Math.random() * ( 99 - 0 );
-   
-    x /= 100;
-    y /= 100;
-    
-    z1 = Math.sqrt(-2*Math.log(x))*Math.cos(2*PI*y);
-    z2 = Math.sqrt(-2*Math.log(x))*Math.sin(2*PI*y);
-    z = (z1+z2) / 2;
-	}while(z < 0 || z > 2.5);
-    
-    return z;
-    
-
+	if(order_status[3]){
+	 dish4showorder.setText("Items ordered: 1");
+	 dish4showorder.setBackground(Color.GREEN);
+	 dish3status.setText("Prepared/Ready");
+	dish3status.setBackground(Color.white);}
+	else {
+		dish4showorder.setText("Items ordered: 0");
+		order_status[19] = true;
+	}}
+	
+	if (order_number == 2){
+		
+		scoreboard_status[1] = false;
+		
+		if(order_status[order_number*4-4]){
+		table2_dish1showorder.setText("Items ordered: 1");
+		table2_dish1showorder.setBackground(Color.GREEN);
+		table2_dish1status.setText("Prepared/Ready");
+		table2_dish1status.setBackground(Color.white);} 
+		else {
+			table2_dish1showorder.setText("Items ordered: 0");
+			order_status[order_number*4-4+16] = true;
+		}
+		
+		if(order_status[order_number*4-3]){
+			table2_dish2showorder.setText("Items ordered: 1");
+			table2_dish2showorder.setBackground(Color.GREEN);
+			table2_dish2status.setText("Prepared/Ready");
+			table2_dish2status.setBackground(Color.white);}
+		else {
+			table2_dish2showorder.setText("Items ordered: 0");
+			order_status[order_number*4-3+16] = true;
+		}
+		
+		if(order_status[order_number*4-2]){
+			table2_dish3showorder.setText("Items ordered: 1");
+			table2_dish3showorder.setBackground(Color.GREEN);
+			table2_dish3status.setText("Prepared/Ready");
+			table2_dish3status.setBackground(Color.white);}
+		else {
+			table2_dish3showorder.setText("Items ordered: 0");
+			order_status[order_number*4-2+16] = true;
+		}
+		
+		if(order_status[order_number*4-1]){
+			table2_dish4showorder.setText("Items ordered: 1");
+			table2_dish4showorder.setBackground(Color.GREEN);
+			table2_dish4status.setText("Prepared/Ready");
+			table2_dish4status.setBackground(Color.white);}
+		else {
+			table2_dish4showorder.setText("Items ordered: 0");
+			order_status[order_number*4-1+16] = true;
+		}
+		}
+	
+	
+	if (order_number == 3){
+		
+		scoreboard_status[2] = false;
+		
+		if(order_status[order_number*4-4]){
+		table3_dish1showorder.setText("Items ordered: 1");
+		table3_dish1showorder.setBackground(Color.GREEN);
+		table3_dish1status.setText("Prepared/Ready");
+		table3_dish1status.setBackground(Color.white);} 
+		else {
+			table3_dish1showorder.setText("Items ordered: 0");
+			order_status[order_number*4-4+16] = true;
+		}
+		
+		if(order_status[order_number*4-3]){
+			table3_dish2showorder.setText("Items ordered: 1");
+			table3_dish2showorder.setBackground(Color.GREEN);
+			table3_dish2status.setText("Prepared/Ready");
+			table3_dish2status.setBackground(Color.white);}
+		else {
+			table3_dish2showorder.setText("Items ordered: 0");
+			order_status[order_number*4-3+16] = true;
+		}
+		
+		if(order_status[order_number*4-2]){
+			table3_dish3showorder.setText("Items ordered: 1");
+			table3_dish3showorder.setBackground(Color.GREEN);
+			table3_dish3status.setText("Prepared/Ready");
+			table3_dish3status.setBackground(Color.white);}
+		else {
+			table3_dish3showorder.setText("Items ordered: 0");
+			order_status[order_number*4-2+16] = true;
+		}
+		
+		if(order_status[order_number*4-1]){
+			table3_dish4showorder.setText("Items ordered: 1");
+			table3_dish4showorder.setBackground(Color.GREEN);
+			table3_dish4status.setText("Prepared/Ready");
+			table3_dish4status.setBackground(Color.white);}
+		else {
+			table3_dish4showorder.setText("Items ordered: 0");
+			order_status[order_number*4-1+16] = true;
+		}
+		}
+	
+	if (order_number == 4){
+		
+		scoreboard_status[3] = false;
+				
+		if(order_status[order_number*4-4]){
+		table4_dish1showorder.setText("Items ordered: 1");
+		table4_dish1showorder.setBackground(Color.GREEN);
+		table4_dish1status.setText("Prepared/Ready");
+		table4_dish1status.setBackground(Color.white);} 
+		else {
+			table4_dish1showorder.setText("Items ordered: 0");
+			order_status[order_number*4-4+16] = true;
+		}
+		
+		if(order_status[order_number*4-3]){
+			table4_dish2showorder.setText("Items ordered: 1");
+			table4_dish2showorder.setBackground(Color.GREEN);
+			table4_dish2status.setText("Prepared/Ready");
+			table4_dish2status.setBackground(Color.white);}
+		else {
+			table4_dish2showorder.setText("Items ordered: 0");
+			order_status[order_number*4-3+16] = true;
+		}
+		
+		if(order_status[order_number*4-2]){
+			table4_dish3showorder.setText("Items ordered: 1");
+			table4_dish3showorder.setBackground(Color.GREEN);
+			table4_dish3status.setText("Prepared/Ready");
+			table4_dish3status.setBackground(Color.white);}
+		else {
+			table4_dish3showorder.setText("Items ordered: 0");
+			order_status[order_number*4-2+16] = true;
+		}
+		
+		if(order_status[order_number*4-1]){
+			table4_dish4showorder.setText("Items ordered: 1");
+			table4_dish4showorder.setBackground(Color.GREEN);
+			table4_dish4status.setText("Prepared/Ready");
+			table4_dish4status.setBackground(Color.white);}
+		else {
+			table4_dish4showorder.setText("Items ordered: 0");
+			order_status[order_number*4-1+16] = true;
+		}
+		}
+	
 }
 
 double prepare_food(int dish_number){
 	
-	if(dish_number == 1) return delay_Norm_Dist(5.0)*5.0;
-	else if (dish_number == 2) return delay_Norm_Dist(7.0)*7.0;
-	else if (dish_number == 3) return delay_Norm_Dist(8.0)*8.0;
-	else if (dish_number == 4) return delay_Norm_Dist(9.0)*9.0;
-	else return delay_Norm_Dist(5.3)*5.3;
+	double delay = norm_random_var();
+	
+	if(dish_number == 1) return (2.0 + delay);
+	else if (dish_number == 2) return (5.0 + delay);
+	else if (dish_number == 3) return (10.0+ delay);
+	else if (dish_number == 4) return (15.0 + delay);
+	else return 5.3;
+	
+}
+
+public static double norm_random_var()
+	{
+		Random generator = new Random();
+		
+		return(generator.nextGaussian());
+	}
+
+
+int score(double table){
+	
+	double total_time, quickest, dispersion, temperature,
+	score_time, score_dispersion, score_temp, score_total;
+	
+	total_time = quickest = dispersion = temperature = 
+	score_time = score_dispersion = score_temp = score_total = 0;
+		
+		total_time = dish_time[(int) (table*4-4)];
+		quickest = dish_time[(int) (table*4-4)];
+		
+		for (int i = (int) (table*4-3); i < (int) (table*4); i++){
+			if (dish_time[i] > total_time) total_time = dish_time[i];
+			if (dish_time[i] < quickest  && dish_time[i] > 0) quickest = dish_time[i];
+		}
+		
+		dispersion = total_time - quickest;
+		temperature = dispersion;
+		
+		if (total_time < 10) score_time = 100;
+		else score_time = 100 - 10*(total_time - 10);
+		if (score_time < 0) score_time = 0;
+		
+		if (dispersion < 1) score_dispersion = 100;
+		else score_dispersion = 100 - 20*(dispersion);
+		if (score_dispersion < 0) score_dispersion = 0;
+		
+		score_temp = score_dispersion;
+		score_total = (score_time + score_dispersion + score_temp)/3;
+		
+		score_board[(int) (table*4-3)] = (int) score_time;
+		score_board[(int) (table*4-2)] = (int) score_dispersion;
+		score_board[(int) (table*4-1)] = (int) score_temp;
+		score_board[(int) (table*4)] = (int) score_total;
+		
+		
+		if (table == 1){
+		
+		scoredish1.setText("SCORE - Time: " + (int) score_time + "%");
+		scoredish2.setText("SCORE - Dispersion: " + (int) score_dispersion + "%");
+		scoredish3.setText("SCORE - Temperature: " + (int) score_temp + "%");
+		scoredish4.setText("SCORE - TOTAL: " + (int) score_total + "%");
+		
+		if (score_time <= 40) scoredish1.setBackground(Color.red);
+        else if (score_time > 40 && score_time <= 70) scoredish1.setBackground(Color.orange);
+        else if (score_time > 70) scoredish1.setBackground(Color.green);
+		
+		if (score_dispersion <= 40) scoredish2.setBackground(Color.red);
+        else if (score_dispersion > 40 && score_dispersion <= 70) scoredish2.setBackground(Color.orange);
+        else if (score_dispersion > 70) scoredish2.setBackground(Color.green);
+		
+		if (score_temp <= 40) scoredish3.setBackground(Color.red);
+        else if (score_temp > 40 && score_temp <= 70) scoredish3.setBackground(Color.orange);
+        else if (score_temp > 70) scoredish3.setBackground(Color.green);
+		
+		if (score_total <= 40) scoredish4.setBackground(Color.red);
+        else if (score_total > 40 && score_total <= 70) scoredish4.setBackground(Color.orange);
+        else if (score_total > 70) scoredish4.setBackground(Color.green);
+		
+		return 1;
+		
+	}
+		
+		if (table == 2){
+			
+			table2_scoredish1.setText("SCORE - Time: " + (int) score_time + "%");
+			table2_scoredish2.setText("SCORE - Dispersion: " + (int) score_dispersion + "%");
+			table2_scoredish3.setText("SCORE - Temperature: " + (int) score_temp + "%");
+			table2_scoredish4.setText("SCORE - TOTAL: " + (int) score_total + "%");
+			
+			if (score_time <= 40) table2_scoredish1.setBackground(Color.red);
+	        else if (score_time > 40 && score_time <= 70) table2_scoredish1.setBackground(Color.orange);
+	        else if (score_time > 70) table2_scoredish1.setBackground(Color.green);
+			
+			if (score_dispersion <= 40) table2_scoredish2.setBackground(Color.red);
+	        else if (score_dispersion > 40 && score_dispersion <= 70) table2_scoredish2.setBackground(Color.orange);
+	        else if (score_dispersion > 70) table2_scoredish2.setBackground(Color.green);
+			
+			if (score_temp <= 40) table2_scoredish3.setBackground(Color.red);
+	        else if (score_temp > 40 && score_temp <= 70) table2_scoredish3.setBackground(Color.orange);
+	        else if (score_temp > 70) table2_scoredish3.setBackground(Color.green);
+			
+			if (score_total <= 40) table2_scoredish4.setBackground(Color.red);
+	        else if (score_total > 40 && score_total <= 70) table2_scoredish4.setBackground(Color.orange);
+	        else if (score_total > 70) table2_scoredish4.setBackground(Color.green);
+			
+			return 1;
+			
+		}	
+		
+if (table == 3){
+			
+			table3_scoredish1.setText("SCORE - Time: " + (int) score_time + "%");
+			table3_scoredish2.setText("SCORE - Dispersion: " + (int) score_dispersion + "%");
+			table3_scoredish3.setText("SCORE - Temperature: " + (int) score_temp + "%");
+			table3_scoredish4.setText("SCORE - TOTAL: " + (int) score_total + "%");
+			
+			if (score_time <= 40) table3_scoredish1.setBackground(Color.red);
+	        else if (score_time > 40 && score_time <= 70) table3_scoredish1.setBackground(Color.orange);
+	        else if (score_time > 70) table3_scoredish1.setBackground(Color.green);
+			
+			if (score_dispersion <= 40) table3_scoredish2.setBackground(Color.red);
+	        else if (score_dispersion > 40 && score_dispersion <= 70) table3_scoredish2.setBackground(Color.orange);
+	        else if (score_dispersion > 70) table3_scoredish2.setBackground(Color.green);
+			
+			if (score_temp <= 40) table3_scoredish3.setBackground(Color.red);
+	        else if (score_temp > 40 && score_temp <= 70) table3_scoredish3.setBackground(Color.orange);
+	        else if (score_temp > 70) table3_scoredish3.setBackground(Color.green);
+			
+			if (score_total <= 40) table3_scoredish4.setBackground(Color.red);
+	        else if (score_total > 40 && score_total <= 70) table3_scoredish4.setBackground(Color.orange);
+	        else if (score_total > 70) table3_scoredish4.setBackground(Color.green);
+			
+			return 1;
+			
+		}	
+		
+if (table == 4){
+	
+	table4_scoredish1.setText("SCORE - Time: " + (int) score_time + "%");
+	table4_scoredish2.setText("SCORE - Dispersion: " + (int) score_dispersion + "%");
+	table4_scoredish3.setText("SCORE - Temperature: " + (int) score_temp + "%");
+	table4_scoredish4.setText("SCORE - TOTAL: " + (int) score_total + "%");
+	
+	if (score_time <= 40) table4_scoredish1.setBackground(Color.red);
+    else if (score_time > 40 && score_time <= 70) table4_scoredish1.setBackground(Color.orange);
+    else if (score_time > 70) table4_scoredish1.setBackground(Color.green);
+	
+	if (score_dispersion <= 40) table4_scoredish2.setBackground(Color.red);
+    else if (score_dispersion > 40 && score_dispersion <= 70) table4_scoredish2.setBackground(Color.orange);
+    else if (score_dispersion > 70) table4_scoredish2.setBackground(Color.green);
+	
+	if (score_temp <= 40) table4_scoredish3.setBackground(Color.red);
+    else if (score_temp > 40 && score_temp <= 70) table4_scoredish3.setBackground(Color.orange);
+    else if (score_temp > 70) table4_scoredish3.setBackground(Color.green);
+	
+	if (score_total <= 40) table4_scoredish4.setBackground(Color.red);
+    else if (score_total > 40 && score_total <= 70) table4_scoredish4.setBackground(Color.orange);
+    else if (score_total > 70) table4_scoredish4.setBackground(Color.green);
+	
+	return 1;
+	
+}			
+
+
+		
+	
+	else return ( (int) (100*table/9.0));
+}
+
+
+void score_board(int table_number){
+	
+	int array_start = table_number*4-4;
+	int dish_count = 0;
+
+	for (int i = array_start; i < array_start + 5; i++) if (order_status[i]) dish_count++;
+	
+	score_board[table_number*4-4] += dish_count;
+	
+	score_board[20] +=score_board[table_number*4-4];
+	score_board[21] +=score_board[table_number*4-3];
+	score_board[22] +=score_board[table_number*4-2];
+	score_board[23] +=score_board[table_number*4-1];
+	score_board[24] +=score_board[table_number*4];
+	
+	scoreboard_status[table_number-1] = true;
+	
+	//reset dishes score
+	
+	update_scoreboard(table_number);
+	
 	
 }
 
 
-int score(double time){
+void update_scoreboard(int table_number){
 	
+	if (score_board[20] == 0) score_board[20] = 1;
 	
-	return ( (int) (100*time/9.0));
+	int scoretime2 = score_board[21]/score_board[20];
+	int scoredispersion2 =  score_board[22]/score_board[20];
+	int scoretemp2 = score_board[23]/score_board[20];
+	int scoretotal2 = score_board[24]/score_board[20];
+	
+	scoretime.setText("SCORE - Time: " + scoretime2 + "%");
+	scoredispersion.setText("SCORE - Dispersion: " + scoredispersion2 + "%");
+	scoretemp.setText("SCORE - Temperature: " + scoretemp2 + "%");
+	scoretotal.setText("SCORE - TOTAL: " + scoretotal2 + "%");
+	
+	if (scoretime2 <= 40) scoretime.setBackground(Color.red);
+    else if (scoretime2 > 40 && scoretime2 <= 70) scoretime.setBackground(Color.orange);
+    else if (scoretime2 > 70) scoretime.setBackground(Color.green);
+	
+	if (scoredispersion2 <= 40) scoredispersion.setBackground(Color.red);
+    else if (scoredispersion2 > 40 && scoredispersion2 <= 70) scoredispersion.setBackground(Color.orange);
+    else if (scoredispersion2 > 70) scoredispersion.setBackground(Color.green);
+	
+	if (scoretemp2 <= 40) scoretemp.setBackground(Color.red);
+    else if (scoretemp2 > 40 && scoretemp2 <= 70) scoretemp.setBackground(Color.orange);
+    else if (scoretemp2 > 70) scoretemp.setBackground(Color.green);
+	
+	if (scoretotal2 <= 40) scoretotal.setBackground(Color.red);
+    else if (scoretotal2 > 40 && scoretotal2 <= 70) scoretotal.setBackground(Color.orange);
+    else if (scoretotal2 > 70) scoretotal.setBackground(Color.green);
+	
 }
-
 
 
 
