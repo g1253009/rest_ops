@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +7,6 @@ import java.util.Date;
 import java.util.Random;
 import java.io.*;
 import java.applet.*;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -18,11 +16,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-
-public class RestaurantMatrix extends Applet  {
+public class RestaurantMatrix extends Applet
+{
 TextField tf, 
 scoretime, scoredispersion, scoretemp, scoretotal,
+
 dish1showorder, dish2showorder, dish3showorder, dish4showorder,
+
 table2_dish1showorder, table2_dish2showorder, table2_dish3showorder, table2_dish4showorder,
 table3_dish1showorder, table3_dish2showorder, table3_dish3showorder, table3_dish4showorder,
 table4_dish1showorder, table4_dish2showorder, table4_dish3showorder, table4_dish4showorder,
@@ -34,25 +34,20 @@ dish1status, dish2status,dish3status,dish4status,
 table2_dish1status, table2_dish2status,table2_dish3status,table2_dish4status,
 table3_dish1status, table3_dish2status,table3_dish3status,table3_dish4status,
 table4_dish1status, table4_dish2status,table4_dish3status,table4_dish4status;
-DrawCanvas c;
+//DrawCanvas c;
 Button drawBtn;
 Choice ch;
 
 int size = 35;
 boolean[] order_status = new boolean[size];
-
 boolean[] scoreboard_status = new boolean[4];
-
 double[] dish_time = new double[size];
-
 int[] score_board = new int[25];
-
 int table_interval, table_number, total_dishes;
-
 java.util.Date date_table1, date_table2, date_table3, date_table4;
 
-public void init() {
-
+public void init()
+{
  table_interval = 7;
  table_number = 1;
 	
@@ -68,19 +63,24 @@ public void init() {
  final Button playgame = new Button("CLICK to PLAY");
  add(playgame);
  
- playgame.addActionListener(new ActionListener(){
-	 public void actionPerformed(ActionEvent e){
+ playgame.addActionListener(new ActionListener()
+ {
+	 public void actionPerformed(ActionEvent e)
+	 {
 		 
 		 playgame.setBackground(Color.GREEN);
 		 
-		 ActionListener taskPerformer = new ActionListener() {
-	            public void actionPerformed(ActionEvent evt) {
+		 ActionListener taskPerformer = new ActionListener()
+		 {
+	            public void actionPerformed(ActionEvent evt)
+	            {
 	               
 	            	create_order(table_number);
 	            	
 	            	date_table1= new java.util.Date();
 	           
-	            }};
+	            }
+	     };
 	      
 	        Timer timer = new Timer( (int) (1000) , taskPerformer);
 	        timer.setRepeats(false);
@@ -88,8 +88,10 @@ public void init() {
 	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 		 
 	        
-		 ActionListener taskPerformer2 = new ActionListener() {
-	            public void actionPerformed(ActionEvent evt) {
+		 ActionListener taskPerformer2 = new ActionListener()
+		 {
+	            public void actionPerformed(ActionEvent evt)
+	            {
 	               
 	            	if (table_number < 4) table_number++;
 	            	else table_number = 1;
@@ -101,7 +103,8 @@ public void init() {
 	            	else if (table_number == 3) date_table3 = new java.util.Date();
 	            	else if (table_number == 4) date_table4 = new java.util.Date();
 	            	
-	            }};
+	            }
+	     };
 	      
 	        Timer timer2 = new Timer( (int) (1000*table_interval) , taskPerformer2);
 	        timer2.setRepeats(true);
@@ -109,8 +112,10 @@ public void init() {
 	        try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
       
 	        
-	         ActionListener taskPerformer3 = new ActionListener() {
-     public void actionPerformed(ActionEvent evt) {
+	         ActionListener taskPerformer3 = new ActionListener()
+	         {
+	        	 	public void actionPerformed(ActionEvent evt)
+	        	 	{
         
      	if (order_status[16] && order_status[17] && order_status[18] && order_status[19] && !scoreboard_status[0]){
      		
@@ -388,9 +393,12 @@ add(table4_scoredish4);
 
 
 //TABLE 1 - Prepare Dish button actions:
- preparedish1.addActionListener(new ActionListener(){
-	 public void actionPerformed(ActionEvent e){
-		 if(order_status[0]){
+ preparedish1.addActionListener(new ActionListener()
+ {
+	 public void actionPerformed(ActionEvent e)
+	 {
+		 if(order_status[0])
+		 {
 			 dish1status.setText("Being Prepared");
 			 dish1status.setBackground(Color.GREEN);
 			 order_status[0] = false;
@@ -400,8 +408,10 @@ add(table4_scoredish4);
 			 
 			 final double wait_time = prepare_food(1);
 	 
-			 ActionListener taskPerformer = new ActionListener() {
-		            public void actionPerformed(ActionEvent evt) {
+			 ActionListener taskPerformer = new ActionListener()
+			 {
+		            public void actionPerformed(ActionEvent evt)
+		            {
 		                dish1status.setText("Dish is ready");
 		                dish1status.setBackground(Color.gray);
 		                order_status[16] = true;
@@ -409,14 +419,16 @@ add(table4_scoredish4);
 		                Date date = new java.util.Date();
 		                dish_time[0] =  (date.getTime() - date_table1.getTime())/1000;
 		               
-		            }};
+		            }
+		     };
 		      
 		        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
 		        timer.setRepeats(false);
 		        timer.start();
 		        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 		 
-		 }}
+		 }
+	 }
  });
  
  preparedish2.addActionListener(new ActionListener(){
@@ -902,219 +914,492 @@ if (order_status[15]){
  
 }
 
-void create_order(int order_number) {
+/*
+ * Generates a random order for the head chef (player) to introduce delays for.
+ * Each dish can be ordered only once.
+ * @return void
+ */
+void create_order(int order_number)
+{
+	double value = random_var();
 	
-	if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-4] = true;
-	if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-3] = true;
-	if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-2] = true;
-	if (!order_status[order_number*4-4] && !order_status[order_number*4-3] && !order_status[order_number*4-2])
-		order_status[order_number*4-1] = true;
-	else if(0 + (int)(Math.random() * ((1 - 0) + 1)) == 1) order_status[order_number*4-1] = true;
-	
-	
-	if (order_number == 1){
+	// select one dish
+	if(value >= 0 && value < 0.25)
+	{
+		double val1 = random_var();
 		
-	scoreboard_status[0] = false;
+		if(val1 >= 0 && val1 < 0.25)
+			order_status[order_number*4-4] = true;
+		else if(val1 >= 0.25 && val1 < 0.50)
+			order_status[order_number*4-3] = true;
+		else if(val1 >= 0.50 && val1 < 0.75)
+			order_status[order_number*4-2] = true;
+		else
+			order_status[order_number*4-1] = true;
+	}
+
+	// select two dishes
+	else if(value >= 0.25 && value < 0.50)
+	{
+		double val2 = random_var();
 		
-	if(order_status[0]){
-	dish1showorder.setText("Items ordered: 1");
-	dish1showorder.setBackground(Color.GREEN);
-	dish1status.setText("Prepared/Ready");
-	dish1status.setBackground(Color.white);} 
-	else {
-		dish1showorder.setText("Items ordered: 0");
-		order_status[16] = true;
+		// select the first dish
+		if(val2 >= 0 && val2 < 0.25)
+		{
+			order_status[order_number*4-4] = true;
+			
+			double val2a = random_var();
+			
+			// select the second dish
+			if(val2a >= 0 && val2a < 0.33)
+				order_status[order_number*4-3] = true;
+			else if(val2a >= 0.33 && val2a < 0.66)
+				order_status[order_number*4-2] = true;
+			else
+				order_status[order_number*4-1] = true;
+		}
+		else if(val2 >= 0.25 && val2 < 0.50)
+		{
+			order_status[order_number*4-3] = true;
+			
+			double val2b = random_var();
+			
+			if(val2b >= 0 && val2b < 0.33)
+				order_status[order_number*4-4] = true;
+			else if(val2b >= 0.33 && val2b < 0.66)
+				order_status[order_number*4-2] = true;
+			else
+				order_status[order_number*4-1] = true;
+		}
+		else if(val2 >= 0.50 && val2 < 0.75)
+		{
+			order_status[order_number*4-2] = true;
+		
+			double val2c = random_var();
+			
+			if(val2c >= 0 && val2c < 0.33)
+				order_status[order_number*4-4] = true;
+			else if(val2c >= 0.33 && val2c < 0.66)
+				order_status[order_number*4-3] = true;
+			else
+				order_status[order_number*4-1] = true;
+		}
+		else
+		{
+			order_status[order_number*4-1] = true;
+		
+			double val2d = random_var();
+			
+			if(val2d >= 0 && val2d < 0.33)
+				order_status[order_number*4-4] = true;
+			else if(val2d >= 0.33 && val2d < 0.66)
+				order_status[order_number*4-3] = true;
+			else
+				order_status[order_number*4-2] = true;
+		}
 	}
 	
-	if(order_status[1]){
-	 dish2showorder.setText("Items ordered: 1");
-	 dish2showorder.setBackground(Color.GREEN);
-	 dish2status.setText("Prepared/Ready");
-		dish2status.setBackground(Color.white);}
-	else {
-		dish2showorder.setText("Items ordered: 0");
-		order_status[17] = true;
-	}
-	
-	if(order_status[2]){
-	 dish3showorder.setText("Items ordered: 1");
-	 dish3showorder.setBackground(Color.GREEN);
-	 dish3status.setText("Prepared/Ready");
-		dish3status.setBackground(Color.white);}
-	else{
-		dish3showorder.setText("Items ordered: 0");
-		order_status[18] = true;
-	}
-	
-	if(order_status[3]){
-	 dish4showorder.setText("Items ordered: 1");
-	 dish4showorder.setBackground(Color.GREEN);
-	 dish3status.setText("Prepared/Ready");
-	dish3status.setBackground(Color.white);}
-	else {
-		dish4showorder.setText("Items ordered: 0");
-		order_status[19] = true;
-	}}
-	
-	if (order_number == 2){
+	// select three dishes
+	else if(value >= 0.50 && value < 0.75)
+	{
+		double val3 = random_var();
 		
-		scoreboard_status[1] = false;
-		
-		if(order_status[order_number*4-4]){
-		table2_dish1showorder.setText("Items ordered: 1");
-		table2_dish1showorder.setBackground(Color.GREEN);
-		table2_dish1status.setText("Prepared/Ready");
-		table2_dish1status.setBackground(Color.white);} 
-		else {
-			table2_dish1showorder.setText("Items ordered: 0");
-			order_status[order_number*4-4+16] = true;
-		}
-		
-		if(order_status[order_number*4-3]){
-			table2_dish2showorder.setText("Items ordered: 1");
-			table2_dish2showorder.setBackground(Color.GREEN);
-			table2_dish2status.setText("Prepared/Ready");
-			table2_dish2status.setBackground(Color.white);}
-		else {
-			table2_dish2showorder.setText("Items ordered: 0");
-			order_status[order_number*4-3+16] = true;
-		}
-		
-		if(order_status[order_number*4-2]){
-			table2_dish3showorder.setText("Items ordered: 1");
-			table2_dish3showorder.setBackground(Color.GREEN);
-			table2_dish3status.setText("Prepared/Ready");
-			table2_dish3status.setBackground(Color.white);}
-		else {
-			table2_dish3showorder.setText("Items ordered: 0");
-			order_status[order_number*4-2+16] = true;
-		}
-		
-		if(order_status[order_number*4-1]){
-			table2_dish4showorder.setText("Items ordered: 1");
-			table2_dish4showorder.setBackground(Color.GREEN);
-			table2_dish4status.setText("Prepared/Ready");
-			table2_dish4status.setBackground(Color.white);}
-		else {
-			table2_dish4showorder.setText("Items ordered: 0");
-			order_status[order_number*4-1+16] = true;
-		}
-		}
-	
-	
-	if (order_number == 3){
-		
-		scoreboard_status[2] = false;
-		
-		if(order_status[order_number*4-4]){
-		table3_dish1showorder.setText("Items ordered: 1");
-		table3_dish1showorder.setBackground(Color.GREEN);
-		table3_dish1status.setText("Prepared/Ready");
-		table3_dish1status.setBackground(Color.white);} 
-		else {
-			table3_dish1showorder.setText("Items ordered: 0");
-			order_status[order_number*4-4+16] = true;
-		}
-		
-		if(order_status[order_number*4-3]){
-			table3_dish2showorder.setText("Items ordered: 1");
-			table3_dish2showorder.setBackground(Color.GREEN);
-			table3_dish2status.setText("Prepared/Ready");
-			table3_dish2status.setBackground(Color.white);}
-		else {
-			table3_dish2showorder.setText("Items ordered: 0");
-			order_status[order_number*4-3+16] = true;
-		}
-		
-		if(order_status[order_number*4-2]){
-			table3_dish3showorder.setText("Items ordered: 1");
-			table3_dish3showorder.setBackground(Color.GREEN);
-			table3_dish3status.setText("Prepared/Ready");
-			table3_dish3status.setBackground(Color.white);}
-		else {
-			table3_dish3showorder.setText("Items ordered: 0");
-			order_status[order_number*4-2+16] = true;
-		}
-		
-		if(order_status[order_number*4-1]){
-			table3_dish4showorder.setText("Items ordered: 1");
-			table3_dish4showorder.setBackground(Color.GREEN);
-			table3_dish4status.setText("Prepared/Ready");
-			table3_dish4status.setBackground(Color.white);}
-		else {
-			table3_dish4showorder.setText("Items ordered: 0");
-			order_status[order_number*4-1+16] = true;
-		}
-		}
-	
-	if (order_number == 4){
-		
-		scoreboard_status[3] = false;
+		// select the first dish
+		if(val3 >= 0 && val3 < 0.25)
+		{
+			order_status[order_number*4-4] = true;
+			
+			double val3a = random_var();
+			
+			// select the second dish
+			if(val3a >= 0 && val3a < 0.33)
+			{
+				order_status[order_number*4-3] = true;
+			
+				double val3aa = random_var();
 				
-		if(order_status[order_number*4-4]){
-		table4_dish1showorder.setText("Items ordered: 1");
-		table4_dish1showorder.setBackground(Color.GREEN);
-		table4_dish1status.setText("Prepared/Ready");
-		table4_dish1status.setBackground(Color.white);} 
-		else {
-			table4_dish1showorder.setText("Items ordered: 0");
-			order_status[order_number*4-4+16] = true;
+				// select the third dish
+				if(val3aa >= 0 && val3aa < 0.50)
+					order_status[order_number*4-2] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else if(val3a >= 0.33 && val3a < 0.66)
+			{
+				order_status[order_number*4-2] = true;
+				
+				double val3ab = random_var();
+				
+				if(val3ab >= 0 && val3ab < 0.50)
+					order_status[order_number*4-3] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else
+			{
+				order_status[order_number*4-1] = true;
+				
+				double val3ac = random_var();
+				
+				if(val3ac >= 0 && val3ac < 0.50)
+					order_status[order_number*4-3] = true;
+				else
+					order_status[order_number*4-2] = true;
+			}
 		}
+		else if(val3 >= 0.25 && val3 < 0.50)
+		{
+			order_status[order_number*4-3] = true;
+			
+			double val3b = random_var();
+			
+			if(val3b >= 0 && val3b < 0.33)
+			{
+				order_status[order_number*4-4] = true;
+			
+				double val3ba = random_var();
+				
+				if(val3ba >= 0 && val3ba < 0.50)
+					order_status[order_number*4-2] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else if(val3b >= 0.33 && val3b < 0.66)
+			{
+				order_status[order_number*4-2] = true;
+				
+				double val3bb = random_var();
+				
+				if(val3bb >= 0 && val3bb < 0.50)
+					order_status[order_number*4-4] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else
+			{
+				order_status[order_number*4-1] = true;
+				
+				double val3bc = random_var();
+				
+				if(val3bc >= 0 && val3bc < 0.50)
+					order_status[order_number*4-4] = true;
+				else
+					order_status[order_number*4-2] = true;
+			}
+		}
+		else if(val3 >= 0.50 && val3 < 0.75)
+		{
+			order_status[order_number*4-2] = true;
 		
-		if(order_status[order_number*4-3]){
-			table4_dish2showorder.setText("Items ordered: 1");
-			table4_dish2showorder.setBackground(Color.GREEN);
-			table4_dish2status.setText("Prepared/Ready");
-			table4_dish2status.setBackground(Color.white);}
-		else {
-			table4_dish2showorder.setText("Items ordered: 0");
-			order_status[order_number*4-3+16] = true;
+			double val3c = random_var();
+			
+			if(val3c >= 0 && val3c < 0.33)
+			{
+				order_status[order_number*4-4] = true;
+				
+				double val3ca = random_var();
+				
+				if(val3ca >= 0 && val3ca < 0.50)
+					order_status[order_number*4-3] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}	
+			else if(val3c >= 0.33 && val3c < 0.66)
+			{
+				order_status[order_number*4-3] = true;
+				
+				double val3cb = random_var();
+				
+				if(val3cb >= 0 && val3cb < 0.50)
+					order_status[order_number*4-4] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else
+			{
+				order_status[order_number*4-1] = true;
+				
+				double val3cc = random_var();
+				
+				if(val3cc >= 0 && val3cc < 0.50)
+					order_status[order_number*4-4] = true;
+				else
+					order_status[order_number*4-3] = true;
+			}
 		}
+		else
+		{
+			order_status[order_number*4-1] = true;
 		
-		if(order_status[order_number*4-2]){
-			table4_dish3showorder.setText("Items ordered: 1");
-			table4_dish3showorder.setBackground(Color.GREEN);
-			table4_dish3status.setText("Prepared/Ready");
-			table4_dish3status.setBackground(Color.white);}
-		else {
-			table4_dish3showorder.setText("Items ordered: 0");
-			order_status[order_number*4-2+16] = true;
+			double val3d = random_var();
+			
+			if(val3d >= 0 && val3d < 0.33)
+			{
+				order_status[order_number*4-4] = true;
+				
+				double val3da = random_var();
+				
+				if(val3da >= 0 && val3da < 0.50)
+					order_status[order_number*4-3] = true;
+				else
+					order_status[order_number*4-2] = true;
+			}
+			else if(val3d >= 0.33 && val3d < 0.66)
+			{
+				order_status[order_number*4-3] = true;
+				
+				double val3db = random_var();
+				
+				if(val3db >= 0 && val3db < 0.50)
+					order_status[order_number*4-4] = true;
+				else
+					order_status[order_number*4-2] = true;
+			}
+			else
+			{
+				order_status[order_number*4-2] = true;
+				
+				double val3dc = random_var();
+				
+				if(val3dc >= 0 && val3dc < 0.50)
+					order_status[order_number*4-4] = true;
+				else
+					order_status[order_number*4-3] = true;
+			}
 		}
-		
-		if(order_status[order_number*4-1]){
-			table4_dish4showorder.setText("Items ordered: 1");
-			table4_dish4showorder.setBackground(Color.GREEN);
-			table4_dish4status.setText("Prepared/Ready");
-			table4_dish4status.setBackground(Color.white);}
-		else {
-			table4_dish4showorder.setText("Items ordered: 0");
-			order_status[order_number*4-1+16] = true;
-		}
-		}
+	}
 	
+	// select four dishes
+	else
+	{
+		order_status[order_number*4-4] = true;
+		order_status[order_number*4-3] = true;
+		order_status[order_number*4-2] = true;
+		order_status[order_number*4-1] = true;
+	}
+	
+	if (order_number == 1)
+	{	
+		scoreboard_status[0] = false;
+			
+		if(order_status[0])
+		{
+		dish1showorder.setText("Items ordered: 1");
+		dish1showorder.setBackground(Color.GREEN);
+		dish1status.setText("Prepared/Ready");
+		dish1status.setBackground(Color.white);} 
+		else
+		{
+			dish1showorder.setText("Items ordered: 0");
+			order_status[16] = true;
+		}
+		
+		if(order_status[1]){
+		 dish2showorder.setText("Items ordered: 1");
+		 dish2showorder.setBackground(Color.GREEN);
+		 dish2status.setText("Prepared/Ready");
+			dish2status.setBackground(Color.white);}
+		else {
+			dish2showorder.setText("Items ordered: 0");
+			order_status[17] = true;
+		}
+		
+		if(order_status[2]){
+		 dish3showorder.setText("Items ordered: 1");
+		 dish3showorder.setBackground(Color.GREEN);
+		 dish3status.setText("Prepared/Ready");
+			dish3status.setBackground(Color.white);}
+		else{
+			dish3showorder.setText("Items ordered: 0");
+			order_status[18] = true;
+		}
+		
+		if(order_status[3]){
+		 dish4showorder.setText("Items ordered: 1");
+		 dish4showorder.setBackground(Color.GREEN);
+		 dish3status.setText("Prepared/Ready");
+		dish3status.setBackground(Color.white);}
+		else {
+			dish4showorder.setText("Items ordered: 0");
+			order_status[19] = true;
+		}}
+		
+		if (order_number == 2){
+			
+			scoreboard_status[1] = false;
+			
+			if(order_status[order_number*4-4]){
+			table2_dish1showorder.setText("Items ordered: 1");
+			table2_dish1showorder.setBackground(Color.GREEN);
+			table2_dish1status.setText("Prepared/Ready");
+			table2_dish1status.setBackground(Color.white);} 
+			else {
+				table2_dish1showorder.setText("Items ordered: 0");
+				order_status[order_number*4-4+16] = true;
+			}
+			
+			if(order_status[order_number*4-3]){
+				table2_dish2showorder.setText("Items ordered: 1");
+				table2_dish2showorder.setBackground(Color.GREEN);
+				table2_dish2status.setText("Prepared/Ready");
+				table2_dish2status.setBackground(Color.white);}
+			else {
+				table2_dish2showorder.setText("Items ordered: 0");
+				order_status[order_number*4-3+16] = true;
+			}
+			
+			if(order_status[order_number*4-2]){
+				table2_dish3showorder.setText("Items ordered: 1");
+				table2_dish3showorder.setBackground(Color.GREEN);
+				table2_dish3status.setText("Prepared/Ready");
+				table2_dish3status.setBackground(Color.white);}
+			else {
+				table2_dish3showorder.setText("Items ordered: 0");
+				order_status[order_number*4-2+16] = true;
+			}
+			
+			if(order_status[order_number*4-1]){
+				table2_dish4showorder.setText("Items ordered: 1");
+				table2_dish4showorder.setBackground(Color.GREEN);
+				table2_dish4status.setText("Prepared/Ready");
+				table2_dish4status.setBackground(Color.white);}
+			else {
+				table2_dish4showorder.setText("Items ordered: 0");
+				order_status[order_number*4-1+16] = true;
+			}
+			}
+		
+		
+		if (order_number == 3){
+			
+			scoreboard_status[2] = false;
+			
+			if(order_status[order_number*4-4]){
+			table3_dish1showorder.setText("Items ordered: 1");
+			table3_dish1showorder.setBackground(Color.GREEN);
+			table3_dish1status.setText("Prepared/Ready");
+			table3_dish1status.setBackground(Color.white);} 
+			else {
+				table3_dish1showorder.setText("Items ordered: 0");
+				order_status[order_number*4-4+16] = true;
+			}
+			
+			if(order_status[order_number*4-3]){
+				table3_dish2showorder.setText("Items ordered: 1");
+				table3_dish2showorder.setBackground(Color.GREEN);
+				table3_dish2status.setText("Prepared/Ready");
+				table3_dish2status.setBackground(Color.white);}
+			else {
+				table3_dish2showorder.setText("Items ordered: 0");
+				order_status[order_number*4-3+16] = true;
+			}
+			
+			if(order_status[order_number*4-2]){
+				table3_dish3showorder.setText("Items ordered: 1");
+				table3_dish3showorder.setBackground(Color.GREEN);
+				table3_dish3status.setText("Prepared/Ready");
+				table3_dish3status.setBackground(Color.white);}
+			else {
+				table3_dish3showorder.setText("Items ordered: 0");
+				order_status[order_number*4-2+16] = true;
+			}
+			
+			if(order_status[order_number*4-1]){
+				table3_dish4showorder.setText("Items ordered: 1");
+				table3_dish4showorder.setBackground(Color.GREEN);
+				table3_dish4status.setText("Prepared/Ready");
+				table3_dish4status.setBackground(Color.white);}
+			else {
+				table3_dish4showorder.setText("Items ordered: 0");
+				order_status[order_number*4-1+16] = true;
+			}
+			}
+		
+		if (order_number == 4){
+			
+			scoreboard_status[3] = false;
+					
+			if(order_status[order_number*4-4]){
+			table4_dish1showorder.setText("Items ordered: 1");
+			table4_dish1showorder.setBackground(Color.GREEN);
+			table4_dish1status.setText("Prepared/Ready");
+			table4_dish1status.setBackground(Color.white);} 
+			else {
+				table4_dish1showorder.setText("Items ordered: 0");
+				order_status[order_number*4-4+16] = true;
+			}
+			
+			if(order_status[order_number*4-3]){
+				table4_dish2showorder.setText("Items ordered: 1");
+				table4_dish2showorder.setBackground(Color.GREEN);
+				table4_dish2status.setText("Prepared/Ready");
+				table4_dish2status.setBackground(Color.white);}
+			else {
+				table4_dish2showorder.setText("Items ordered: 0");
+				order_status[order_number*4-3+16] = true;
+			}
+			
+			if(order_status[order_number*4-2]){
+				table4_dish3showorder.setText("Items ordered: 1");
+				table4_dish3showorder.setBackground(Color.GREEN);
+				table4_dish3status.setText("Prepared/Ready");
+				table4_dish3status.setBackground(Color.white);}
+			else {
+				table4_dish3showorder.setText("Items ordered: 0");
+				order_status[order_number*4-2+16] = true;
+			}
+			
+			if(order_status[order_number*4-1]){
+				table4_dish4showorder.setText("Items ordered: 1");
+				table4_dish4showorder.setBackground(Color.GREEN);
+				table4_dish4status.setText("Prepared/Ready");
+				table4_dish4status.setBackground(Color.white);}
+			else {
+				table4_dish4showorder.setText("Items ordered: 0");
+				order_status[order_number*4-1+16] = true;
+			}
+			}
+		
 }
 
 double prepare_food(int dish_number){
-	
+
 	double delay = norm_random_var();
 	
 	if(dish_number == 1) return (2.0 + delay);
 	else if (dish_number == 2) return (5.0 + delay);
-	else if (dish_number == 3) return (10.0+ delay);
+	else if (dish_number == 3) return (10.0 + delay);
 	else if (dish_number == 4) return (15.0 + delay);
 	else return 5.3;
 	
 }
 
+/*
+ * Can also use this for the delay.
+ * Uses the built-in nextGaussian method.
+ * @return double
+ */
 public static double norm_random_var()
-	{
-		Random generator = new Random();
-		
-		return(generator.nextGaussian());
-	}
+{
+	Random generator = new Random();
+	
+	return(generator.nextGaussian());
+}
+
+/*
+ * Returns a random variable between 0 and 1.0.
+ * @return double
+ */
+public static double random_var()
+{
+	Random generator = new Random();
+	
+	return(generator.nextDouble());
+}
 
 
-int score(double table){
+int score(double table)
+{
 	
 	double total_time, quickest, dispersion, temperature,
 	score_time, score_dispersion, score_temp, score_total;
@@ -1264,7 +1549,6 @@ if (table == 4){
 	else return ( (int) (100*table/9.0));
 }
 
-
 void score_board(int table_number){
 	
 	int array_start = table_number*4-4;
@@ -1288,7 +1572,6 @@ void score_board(int table_number){
 	
 	
 }
-
 
 void update_scoreboard(int table_number){
 	
@@ -1322,69 +1605,4 @@ void update_scoreboard(int table_number){
 	
 }
 
-
-
-//CODE NOT REQUIRED - TO DELETE
-// Handle events that have occurred
-public boolean handleEvent(Event evt) {
-switch(evt.id) {
- // This can be handled 
- case Event.ACTION_EVENT: {
-  if(evt.target instanceof Button)    { 
-   // Repaint canvas to use new choices...
-	  //dish1showorder.setText("1");
-   }  // end if
-   return false;
- }
- default:
-  return false;
- }
 }
-
-// Return the current choice to display...
-public String getChoice() {
- return ch.getSelectedItem();
-}
-
-// Return the text in the list box...
-public String getTextString() {
- return tf.getText();
-}
-}
-
-// This is a custom canvas that is used for drawing
-// text, a rectangle, or nothing...
-class DrawCanvas extends Canvas {
-RestaurantMatrix e1app;
- // Constructor - store the applet to get drawing info...
- public DrawCanvas(RestaurantMatrix a) {
-  e1app = a;
- }
- // Draw the image per the choices in the applet...
- public synchronized void paint (Graphics g) {
-  // Get the current size of the display area...
-  Dimension dm = size();
-  // Draw based on choice...
-  String s = e1app.getChoice();
-  // Calculate center coordinates...
-  int x,y,width,height;
-  x = dm.width/4;
-  y = dm.height / 4;
-  width = dm.width / 2;
-  height = dm.height / 2;
-  // Paint a rectangle in the center...
-  if (s.compareTo("Rectangle") == 0) {
-   // Draw the rectangle in the center with colors! 
-   g.setColor(Color.blue);
-   g.drawRect(x,y,width,height);
-   g.setColor(Color.yellow);
-   g.fillRect(x + 1,y + 1,width - 2,height - 2); 
-  } // end if
-  // Get the text in the applet and display in the middle...
-  if (s.compareTo("Text") == 0) {
-   String displayText = e1app.getTextString(); 
-   g.setColor(Color.red);
-   g.drawString(displayText,x,y + (height/2)); 
-  }
- }
-} 
