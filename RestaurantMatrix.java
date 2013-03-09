@@ -1,28 +1,25 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.*;
-import java.security.Timestamp;
+import javax.swing.Timer;
 import java.util.Date;
 import java.util.Random;
-import java.io.*;
 import java.applet.*;
+
+/*import java.io.*;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import java.lang.*;
+import java.security.Timestamp;*/
 
 public class RestaurantMatrix extends Applet
 {
 	TextField tf, scoretime, scoredispersion, scoretemp, scoretotal;
-
-//DrawCanvas c;
-//Button drawBtn;
-//Choice ch;
 
 	TextField[] table1_dishshoworder = new TextField[4];
 	TextField[] table2_dishshoworder = new TextField[4];
@@ -39,21 +36,20 @@ public class RestaurantMatrix extends Applet
 	TextField[] table3_dishstatus = new TextField[4];
 	TextField[] table4_dishstatus = new TextField[4];
 
-int size = 35;
-boolean[] order_status = new boolean[size];
-boolean[] scoreboard_status = new boolean[4];
-double[] dish_time = new double[size];
-int[] score_board = new int[25];
-int table_interval, table_number, total_dishes;
-java.util.Date date_table1, date_table2, date_table3, date_table4;
+	final int size = 35;
+	int table_interval, table_number, total_dishes;
+	boolean[] order_status = new boolean[size];
+	boolean[] scoreboard_status = new boolean[4];
+	double[] dish_time = new double[size];
+	int[] score_board = new int[25];
+	Date[] order_start_time = new Date[4];
 
 public void init()
 {
- table_interval = 7;
- table_number = 1;
+	table_interval = 7;
+	table_number = 1;
 	
-	// Set up display area...
- resize(900,600);
+	resize(900,600);
   
  int rows = 0;
  int columns = 6;
@@ -68,26 +64,22 @@ public void init()
  {
 	 public void actionPerformed(ActionEvent e)
 	 {
-		 
 		 playgame.setBackground(Color.GREEN);
 		 
 		 ActionListener taskPerformer = new ActionListener()
 		 {
 	            public void actionPerformed(ActionEvent evt)
 	            {
-	               
 	            	create_order(table_number);
 	            	
-	            	date_table1= new java.util.Date();
-	           
+	            	order_start_time[0] = new Date();
 	            }
 	     };
 	      
 	        Timer timer = new Timer( (int) (1000) , taskPerformer);
 	        timer.setRepeats(false);
 	        timer.start();
-	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
-		 
+	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();} 
 	        
 		 ActionListener taskPerformer2 = new ActionListener()
 		 {
@@ -99,10 +91,10 @@ public void init()
 	            
 	            	create_order(table_number);
 	            	
-	            	if (table_number == 1) date_table1 = new java.util.Date();
-	            	else if (table_number == 2) date_table2 = new java.util.Date();
-	            	else if (table_number == 3) date_table3 = new java.util.Date();
-	            	else if (table_number == 4) date_table4 = new java.util.Date();
+	            	if (table_number == 1) order_start_time[0] = new Date();
+	            	else if (table_number == 2) order_start_time[1] = new Date();
+	            	else if (table_number == 3) order_start_time[2] = new Date();
+	            	else if (table_number == 4) order_start_time[3] = new Date();
 	            	
 	            }
 	     };
@@ -418,7 +410,7 @@ add(table4_scoredish[3]);
 		                order_status[16] = true;
 		                
 		                Date date = new java.util.Date();
-		                dish_time[0] =  (date.getTime() - date_table1.getTime())/1000;
+		                dish_time[0] =  (date.getTime() - order_start_time[0].getTime())/1000;
 		               
 		            }
 		     };
@@ -451,7 +443,7 @@ add(table4_scoredish[3]);
 	                order_status[17] = true;
 	                
 	                Date date = new java.util.Date();
-	                dish_time[1] =  (date.getTime() - date_table1.getTime())/1000;
+	                dish_time[1] =  (date.getTime() - order_start_time[0].getTime())/1000;
 	              
 	            }};
 	            
@@ -482,7 +474,7 @@ add(table4_scoredish[3]);
 	                order_status[18] = true;
 	                
 	                Date date = new java.util.Date();
-	                dish_time[2] =  (date.getTime() - date_table1.getTime())/1000;
+	                dish_time[2] =  (date.getTime() - order_start_time[0].getTime())/1000;
 	               
 	            }};
 	           
@@ -513,7 +505,7 @@ if (order_status[3]){
 	                order_status[19] = true;
 	                
 	                Date date = new java.util.Date();
-	                dish_time[3] =  (date.getTime() - date_table1.getTime())/1000;
+	                dish_time[3] =  (date.getTime() - order_start_time[0].getTime())/1000;
 	              
 	            }};
 	        
@@ -547,7 +539,7 @@ table2_preparedish1.addActionListener(new ActionListener(){
 		            	order_status[20] = true;
 		       
 		            	Date date = new java.util.Date();
-		                dish_time[4] =  (date.getTime() - date_table2.getTime())/1000;
+		                dish_time[4] =  (date.getTime() - order_start_time[1].getTime())/1000;
 		            	
 		            }};
 		      
@@ -578,7 +570,7 @@ table2_preparedish2.addActionListener(new ActionListener(){
 	            	order_status[21] = true;
 	                
 	            	Date date = new java.util.Date();
-	                dish_time[5] =  (date.getTime() - date_table2.getTime())/1000;
+	                dish_time[5] =  (date.getTime() - order_start_time[1].getTime())/1000;
 	            	
 	            }};
 	            
@@ -610,7 +602,7 @@ table2_preparedish3.addActionListener(new ActionListener(){
 	            	order_status[22] = true;
 	            	
 	            	Date date = new java.util.Date();
-	                dish_time[6] =  (date.getTime() - date_table2.getTime())/1000;
+	                dish_time[6] =  (date.getTime() - order_start_time[1].getTime())/1000;
 	            
 	            }};
 	            
@@ -641,7 +633,7 @@ if (order_status[7]){
 	            	order_status[23] = true;
 	            	
 	            	Date date = new java.util.Date();
-	                dish_time[7] =  (date.getTime() - date_table2.getTime())/1000;
+	                dish_time[7] =  (date.getTime() - order_start_time[1].getTime())/1000;
 	            	
 	            }};
 	        
@@ -677,7 +669,7 @@ table3_preparedish1.addActionListener(new ActionListener(){
 		            	order_status[24] = true;
 		               
 		            	Date date = new java.util.Date();
-		                dish_time[8] =  (date.getTime() - date_table3.getTime())/1000;
+		                dish_time[8] =  (date.getTime() - order_start_time[2].getTime())/1000;
 		            	
 		            }};
 		      
@@ -708,7 +700,7 @@ table3_preparedish2.addActionListener(new ActionListener(){
 	            	order_status[25] = true;
 	                
 	            	Date date = new java.util.Date();
-	                dish_time[9] =  (date.getTime() - date_table3.getTime())/1000;
+	                dish_time[9] =  (date.getTime() - order_start_time[2].getTime())/1000;
 	            	
 	            }};
 	           
@@ -740,7 +732,7 @@ table3_preparedish3.addActionListener(new ActionListener(){
 	            	order_status[26] = true;
 	               
 	            	Date date = new java.util.Date();
-	                dish_time[10] =  (date.getTime() - date_table3.getTime())/1000;
+	                dish_time[10] =  (date.getTime() - order_start_time[2].getTime())/1000;
 	            	
 	            }};
 	   
@@ -771,7 +763,7 @@ if (order_status[11]){
 	            	order_status[27] = true;
 	             	
 	            	Date date = new java.util.Date();
-	                dish_time[11] =  (date.getTime() - date_table3.getTime())/1000;
+	                dish_time[11] =  (date.getTime() - order_start_time[2].getTime())/1000;
 	            	
 	            }};
 	        
@@ -804,7 +796,7 @@ table4_preparedish1.addActionListener(new ActionListener(){
 		            	order_status[28] = true;
 		       
 		            	Date date = new java.util.Date();
-		                dish_time[12] =  (date.getTime() - date_table4.getTime())/1000;
+		                dish_time[12] =  (date.getTime() - order_start_time[3].getTime())/1000;
 		            	
 		            }};
 		      
@@ -835,7 +827,7 @@ table4_preparedish2.addActionListener(new ActionListener(){
 	            	order_status[29] = true;
 	                
 	            	Date date = new java.util.Date();
-	                dish_time[13] =  (date.getTime() - date_table4.getTime())/1000;
+	                dish_time[13] =  (date.getTime() - order_start_time[3].getTime())/1000;
 	            
 	            }};
 	            
@@ -866,7 +858,7 @@ table4_preparedish3.addActionListener(new ActionListener(){
 	            	order_status[30] = true;
 	               
 	            	Date date = new java.util.Date();
-	                dish_time[14] =  (date.getTime() - date_table4.getTime())/1000;
+	                dish_time[14] =  (date.getTime() - order_start_time[3].getTime())/1000;
 	            	
 	            }};
 	         
@@ -899,7 +891,7 @@ if (order_status[15]){
 	            	order_status[31] = true;
 	                
 	            	Date date = new java.util.Date();
-	                dish_time[15] =  (date.getTime() - date_table4.getTime())/1000;
+	                dish_time[15] =  (date.getTime() - order_start_time[3].getTime())/1000;
 	            	
 	            }};
 	        
