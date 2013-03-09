@@ -69,80 +69,76 @@ public class RestaurantMatrix extends Applet
  
 		playgame.addActionListener(new ActionListener()
 		{
-	 public void actionPerformed(ActionEvent e)
-	 {
-		 playgame.setBackground(Color.GREEN);
+			public void actionPerformed(ActionEvent e)
+			{
+				playgame.setBackground(Color.GREEN);
 		 
-		 ActionListener taskPerformer = new ActionListener()
-		 {
-	            public void actionPerformed(ActionEvent evt)
-	            {
-	            	create_order(table_number);
-	            	
-	            	order_start_time[0] = new Date();
-	            }
-	     };
+				ActionListener taskPerformer = new ActionListener()
+				{
+					public void actionPerformed(ActionEvent evt)
+					{
+						create_order(table_number);
+						order_start_time[0] = new Date();
+					}
+				};
 	      
-	        Timer timer = new Timer( (int) (1000) , taskPerformer);
-	        timer.setRepeats(false);
-	        timer.start();
-	        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();} 
+				Timer timer = new Timer( (int) (1000) , taskPerformer);
+				timer.setRepeats(false);
+				timer.start();
+				try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();} 
 	        
-		 ActionListener taskPerformer2 = new ActionListener()
-		 {
-	            public void actionPerformed(ActionEvent evt)
-	            {
+				ActionListener taskPerformer2 = new ActionListener()
+				{
+					public void actionPerformed(ActionEvent evt)
+					{
 	               
-	            	if (table_number < 4) table_number++;
-	            	else table_number = 1;
+						if (table_number < 4) table_number++;
+						else table_number = 1;
 	            
-	            	create_order(table_number);
+						create_order(table_number);
 	            	
-	            	if (table_number == 1) order_start_time[0] = new Date();
-	            	else if (table_number == 2) order_start_time[1] = new Date();
-	            	else if (table_number == 3) order_start_time[2] = new Date();
-	            	else if (table_number == 4) order_start_time[3] = new Date();
-	            	
-	            }
-	     };
+						if (table_number == 1) order_start_time[0] = new Date();
+						else if (table_number == 2) order_start_time[1] = new Date();
+						else if (table_number == 3) order_start_time[2] = new Date();
+						else if (table_number == 4) order_start_time[3] = new Date();
+					}
+				};
 	      
-	        Timer timer2 = new Timer( (int) (1000*table_interval) , taskPerformer2);
-	        timer2.setRepeats(true);
-	        timer2.start();
-	        try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
+				Timer timer2 = new Timer( (int) (1000*table_interval) , taskPerformer2);
+				timer2.setRepeats(true);
+				timer2.start();
+				try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
       
 	        
-	         ActionListener taskPerformer3 = new ActionListener()
-	         {
-	        	 	public void actionPerformed(ActionEvent evt)
-	        	 	{
-        
-     	if (order_status[16] && order_status[17] && order_status[18] && order_status[19] && !scoreboard_status[0]){
-     		
-     		score(1);
-     		score_board(1);
-     	}
+				ActionListener taskPerformer3 = new ActionListener()
+				{
+					public void actionPerformed(ActionEvent evt)
+					{
+						if (order_status[16] && order_status[17] && order_status[18] && order_status[19] && !scoreboard_status[0])
+						{
+							score(1);
+							score_board(1);
+						}
      	
-     	if (order_status[20] && order_status[21] && order_status[22] && order_status[23] && !scoreboard_status[1]){
-     		
-     		score(2);
-     		score_board(2);
-     	}
+						if (order_status[20] && order_status[21] && order_status[22] && order_status[23] && !scoreboard_status[1])
+						{
+							score(2);
+							score_board(2);
+						}
      	
-     	if (order_status[24] && order_status[25] && order_status[26] && order_status[27] && !scoreboard_status[2]){
-     		
-     		score(3);
-     		score_board(3);
-     	}
+						if (order_status[24] && order_status[25] && order_status[26] && order_status[27] && !scoreboard_status[2])
+						{
+							score(3);
+							score_board(3);
+						}
 
-     	if (order_status[28] && order_status[29] && order_status[30] && order_status[31] && !scoreboard_status[3]){
-		
-		score(4);
-		score_board(4);
-     	}
-     	
-     }
-     };
+						if (order_status[28] && order_status[29] && order_status[30] && order_status[31] && !scoreboard_status[3])
+						{
+							score(4);
+							score_board(4);
+						}
+					}
+		};
 
  Timer timer3 = new Timer( 50 , taskPerformer3);
  timer3.setRepeats(true);
@@ -1176,187 +1172,89 @@ void create_order(int order_number)
 		order_status[order_number*4-1] = true;
 	}
 	
+	// update the display
 	if (order_number == 1)
 	{	
 		scoreboard_status[0] = false;
 			
-		if(order_status[0])
+		for(int i = 0; i < 4; i++)
 		{
-			table1.dishshoworder[0].setText("Items ordered: 1");
-			table1.dishshoworder[0].setBackground(Color.GREEN);
-			table1.dishstatus[0].setText("Prepared/Ready");
-			table1.dishstatus[0].setBackground(Color.white);} 
-		else
+			if(order_status[i])
+			{
+				table1.dishshoworder[i].setText("Items ordered: 1");
+				table1.dishshoworder[i].setBackground(Color.GREEN);
+				table1.dishstatus[i].setText("Prepared/Ready");
+				table1.dishstatus[i].setBackground(Color.white);
+			} 
+			else
+			{
+				table1.dishshoworder[i].setText("Items ordered: 0");
+				order_status[i + 16] = true;
+			}
+		}
+	}	
+	
+	if (order_number == 2)
+	{		
+		scoreboard_status[1] = false;
+		
+		for(int i = 0, j = 4; i < 4; i++, j--)
 		{
-			table1.dishshoworder[0].setText("Items ordered: 0");
-			order_status[16] = true;
-		}
-		
-		if(order_status[1]){
-			table1.dishshoworder[1].setText("Items ordered: 1");
-			table1.dishshoworder[1].setBackground(Color.GREEN);
-			table1.dishstatus[1].setText("Prepared/Ready");
-			table1.dishstatus[1].setBackground(Color.white);}
-		else {
-			table1.dishshoworder[1].setText("Items ordered: 0");
-			order_status[17] = true;
-		}
-		
-		if(order_status[2]){
-			table1.dishshoworder[2].setText("Items ordered: 1");
-			table1.dishshoworder[2].setBackground(Color.GREEN);
-			table1.dishstatus[2].setText("Prepared/Ready");
-			table1.dishstatus[2].setBackground(Color.white);}
-		else{
-			table1.dishshoworder[2].setText("Items ordered: 0");
-			order_status[18] = true;
-		}
-		
-		if(order_status[3]){
-			table1.dishshoworder[3].setText("Items ordered: 1");
-			table1.dishshoworder[3].setBackground(Color.GREEN);
-			table1.dishstatus[3].setText("Prepared/Ready");
-			table1.dishstatus[3].setBackground(Color.white);}
-		else {
-			table1.dishshoworder[3].setText("Items ordered: 0");
-			order_status[19] = true;
-		}}
-		
-		if (order_number == 2){
-			
-			scoreboard_status[1] = false;
-			
-			if(order_status[order_number*4-4]){
-			table2.dishshoworder[0].setText("Items ordered: 1");
-			table2.dishshoworder[0].setBackground(Color.GREEN);
-			table2.dishstatus[0].setText("Prepared/Ready");
-			table2.dishstatus[0].setBackground(Color.white);} 
-			else {
-				table2.dishshoworder[0].setText("Items ordered: 0");
-				order_status[order_number*4-4+16] = true;
+			if(order_status[order_number*4 - j])
+			{
+				table2.dishshoworder[i].setText("Items ordered: 1");
+				table2.dishshoworder[i].setBackground(Color.GREEN);
+				table2.dishstatus[i].setText("Prepared/Ready");
+				table2.dishstatus[i].setBackground(Color.white);
+			} 
+			else
+			{
+				table2.dishshoworder[i].setText("Items ordered: 0");
+				order_status[order_number*4 - j + 16] = true;
 			}
-			
-			if(order_status[order_number*4-3]){
-				table2.dishshoworder[1].setText("Items ordered: 1");
-				table2.dishshoworder[1].setBackground(Color.GREEN);
-				table2.dishstatus[1].setText("Prepared/Ready");
-				table2.dishstatus[1].setBackground(Color.white);}
-			else {
-				table2.dishshoworder[1].setText("Items ordered: 0");
-				order_status[order_number*4-3+16] = true;
-			}
-			
-			if(order_status[order_number*4-2]){
-				table2.dishshoworder[2].setText("Items ordered: 1");
-				table2.dishshoworder[2].setBackground(Color.GREEN);
-				table2.dishstatus[2].setText("Prepared/Ready");
-				table2.dishstatus[2].setBackground(Color.white);}
-			else {
-				table2.dishshoworder[2].setText("Items ordered: 0");
-				order_status[order_number*4-2+16] = true;
-			}
-			
-			if(order_status[order_number*4-1]){
-				table2.dishshoworder[3].setText("Items ordered: 1");
-				table2.dishshoworder[3].setBackground(Color.GREEN);
-				table2.dishstatus[3].setText("Prepared/Ready");
-				table2.dishstatus[3].setBackground(Color.white);}
-			else {
-				table2.dishshoworder[3].setText("Items ordered: 0");
-				order_status[order_number*4-1+16] = true;
-			}
-			}
-		
-		
-		if (order_number == 3){
-			
-			scoreboard_status[2] = false;
-			
-			if(order_status[order_number*4-4]){
-			table3.dishshoworder[0].setText("Items ordered: 1");
-			table3.dishshoworder[0].setBackground(Color.GREEN);
-			table3.dishstatus[0].setText("Prepared/Ready");
-			table3.dishstatus[0].setBackground(Color.white);} 
-			else {
-				table3.dishshoworder[0].setText("Items ordered: 0");
-				order_status[order_number*4-4+16] = true;
-			}
-			
-			if(order_status[order_number*4-3]){
-				table3.dishshoworder[1].setText("Items ordered: 1");
-				table3.dishshoworder[1].setBackground(Color.GREEN);
-				table3.dishstatus[1].setText("Prepared/Ready");
-				table3.dishstatus[1].setBackground(Color.white);}
-			else {
-				table3.dishshoworder[1].setText("Items ordered: 0");
-				order_status[order_number*4-3+16] = true;
-			}
-			
-			if(order_status[order_number*4-2]){
-				table3.dishshoworder[2].setText("Items ordered: 1");
-				table3.dishshoworder[2].setBackground(Color.GREEN);
-				table3.dishstatus[2].setText("Prepared/Ready");
-				table3.dishstatus[2].setBackground(Color.white);}
-			else {
-				table3.dishshoworder[2].setText("Items ordered: 0");
-				order_status[order_number*4-2+16] = true;
-			}
-			
-			if(order_status[order_number*4-1]){
-				table3.dishshoworder[3].setText("Items ordered: 1");
-				table3.dishshoworder[3].setBackground(Color.GREEN);
-				table3.dishstatus[3].setText("Prepared/Ready");
-				table3.dishstatus[3].setBackground(Color.white);}
-			else {
-				table3.dishshoworder[3].setText("Items ordered: 0");
-				order_status[order_number*4-1+16] = true;
-			}
-			}
-		
-		if (order_number == 4){
-			
-			scoreboard_status[3] = false;
-					
-			if(order_status[order_number*4-4]){
-			table4.dishshoworder[0].setText("Items ordered: 1");
-			table4.dishshoworder[0].setBackground(Color.GREEN);
-			table4.dishstatus[0].setText("Prepared/Ready");
-			table4.dishstatus[0].setBackground(Color.white);} 
-			else {
-				table4.dishshoworder[0].setText("Items ordered: 0");
-				order_status[order_number*4-4+16] = true;
-			}
-			
-			if(order_status[order_number*4-3]){
-				table4.dishshoworder[1].setText("Items ordered: 1");
-				table4.dishshoworder[1].setBackground(Color.GREEN);
-				table4.dishstatus[1].setText("Prepared/Ready");
-				table4.dishstatus[1].setBackground(Color.white);}
-			else {
-				table4.dishshoworder[1].setText("Items ordered: 0");
-				order_status[order_number*4-3+16] = true;
-			}
-			
-			if(order_status[order_number*4-2]){
-				table4.dishshoworder[2].setText("Items ordered: 1");
-				table4.dishshoworder[2].setBackground(Color.GREEN);
-				table4.dishstatus[2].setText("Prepared/Ready");
-				table4.dishstatus[2].setBackground(Color.white);}
-			else {
-				table4.dishshoworder[2].setText("Items ordered: 0");
-				order_status[order_number*4-2+16] = true;
-			}
-			
-			if(order_status[order_number*4-1]){
-				table4.dishshoworder[3].setText("Items ordered: 1");
-				table4.dishshoworder[3].setBackground(Color.GREEN);
-				table4.dishstatus[3].setText("Prepared/Ready");
-				table4.dishstatus[3].setBackground(Color.white);}
-			else {
-				table4.dishshoworder[3].setText("Items ordered: 0");
-				order_status[order_number*4-1+16] = true;
+		}	
+	}
+
+	if (order_number == 3)
+	{		
+		scoreboard_status[2] = false;
+	
+		for(int i = 0, j = 4; i < 4; i++, j--)
+		{
+			if(order_status[order_number*4 - j])
+			{
+				table3.dishshoworder[i].setText("Items ordered: 1");
+				table3.dishshoworder[i].setBackground(Color.GREEN);
+				table3.dishstatus[i].setText("Prepared/Ready");
+				table3.dishstatus[i].setBackground(Color.white);
+			} 
+			else
+			{
+				table3.dishshoworder[i].setText("Items ordered: 0");
+				order_status[order_number*4 - j + 16] = true;
 			}
 		}
+	}
+		
+	if (order_number == 4)
+	{	
+		scoreboard_status[3] = false;
+	
+		for(int i = 0, j = 4; i < 4; i++, j--)
+		{
+			if(order_status[order_number*4 - j])
+			{
+				table4.dishshoworder[i].setText("Items ordered: 1");
+				table4.dishshoworder[i].setBackground(Color.GREEN);
+				table4.dishstatus[i].setText("Prepared/Ready");
+				table4.dishstatus[i].setBackground(Color.white);} 
+			else
+			{
+				table4.dishshoworder[i].setText("Items ordered: 0");
+				order_status[order_number*4 - j + 16] = true;
+			}
+		}	
+	}
 }
 
 double prepare_food(int dish_number)
