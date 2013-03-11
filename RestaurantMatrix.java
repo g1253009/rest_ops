@@ -35,21 +35,6 @@ public class RestaurantMatrix extends Applet
 	int[] score_board = new int[25];
 	Date[] order_start_time = new Date[4];
 	boolean[] scoreboard_status = new boolean[4];
-
-	public class Table
-	{
-		TextField[] dishshoworder = new TextField[4];
-		TextField[] scoredish = new TextField[4];
-		TextField[] dishstatus = new TextField[4];
-
-		final int size = 35;
-		int table_number;
-	
-		public Table(int _table_number)
-		{
-			table_number = _table_number;
-		}
-	}
 	
 	public void init()
 	{
@@ -66,6 +51,245 @@ public class RestaurantMatrix extends Applet
   
 		final Button playgame = new Button("CLICK to PLAY");
 		add(playgame);
+		
+		//SET Header rows - play game and scoreboard
+		 scoretime = new TextField("SCORE - Time: TBC");
+		 add(scoretime);
+		 scoretime.setBackground(Color.yellow);
+		 scoredispersion = new TextField("SCORE - Dispersion: TBC");
+		 add(scoredispersion);
+		 scoredispersion.setBackground(Color.yellow);
+		 scoretemp = new TextField("SCORE - Temperature: TBC");
+		 add(scoretemp);
+		 scoretemp.setBackground(Color.yellow);
+		 scoretotal = new TextField("SCORE Score: TBC");
+		 add(scoretotal);
+		 scoretotal.setBackground(Color.yellow);
+		 TextField computerscore = new TextField("COMPUTER SCORE: TBC");
+		 add(computerscore);
+		 computerscore.setBackground(Color.yellow);
+		 
+		 //Matrix headings
+		 TextField menuoptions = new TextField("MENU OPTIONS");
+		 add(menuoptions);
+		 menuoptions.setBackground(Color.GRAY);
+
+		 TextField expecteddtime = new TextField("EXPECTED TIME");
+		 add(expecteddtime);
+		 expecteddtime.setBackground(Color.GRAY);
+		 
+		 TextField showorder = new TextField("SHOW ORDER");
+		 add(showorder);
+		 showorder.setBackground(Color.GRAY);
+		 
+		 TextField preparefood = new TextField("PREPARE FOOD?");
+		 add(preparefood);
+		 preparefood.setBackground(Color.GRAY);
+		 
+		 TextField foodstatus = new TextField("DISH STATUS");
+		 add(foodstatus);
+		 foodstatus.setBackground(Color.GRAY);
+		 
+		 TextField customerscore = new TextField("CUSTOMER SCORE");
+		 add(customerscore);
+		 customerscore.setBackground(Color.GRAY);
+		 
+		 //SET-UP TABLE 1
+		 //Line entries - dish - 1 - Table 1
+		 add(new TextField("Table 1 - Soup"));
+		 add(new TextField("2 seconds"));
+		 table1.dishshoworder[0] = new TextField("0");
+		 add(table1.dishshoworder[0]);
+		 final Button preparedish1 = new Button("CLICK to prepare");
+		 add(preparedish1);
+		 table1.dishstatus[0] = new TextField("Prepared/Ready");
+		 add(table1.dishstatus[0]);
+		 table1.scoredish[0] = new TextField("SCORE - Time: TBC");
+		 add(table1.scoredish[0]);
+		 
+		 //Line entries - dish - 2 - Table 1
+		 add(new TextField("Table 1 - Steak"));
+		 add(new TextField("5 seconds"));
+		 table1.dishshoworder[1] = new TextField("0");
+		 add(table1.dishshoworder[1]);
+		 final Button preparedish2 = new Button("CLICK to prepare");
+		 add(preparedish2);
+		 table1.dishstatus[1] = new TextField("Prepared/Ready");
+		 add(table1.dishstatus[1]);
+		 table1.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
+		 add(table1.scoredish[1]);
+		 
+		//Line entries - dish - 3 - Table 1
+		add(new TextField("Table 1 - Burger"));
+		add(new TextField("10 seconds"));
+		table1.dishshoworder[2] = new TextField("0");
+		add(table1.dishshoworder[2]);
+		final Button preparedish3 = new Button("CLICK to prepare");
+		add(preparedish3);
+		table1.dishstatus[2] = new TextField("Prepared/Ready");
+		add(table1.dishstatus[2]);
+		table1.scoredish[2] = new TextField("SCORE - Temperature: TBC");
+		add(table1.scoredish[2]); 
+
+		//Line entries - dish - 4 - Table 1
+		add(new TextField("Table 1 - Fish"));
+		add(new TextField("15 seconds"));
+		table1.dishshoworder[3] = new TextField("0");
+		add(table1.dishshoworder[3]);
+		final Button preparedish4 = new Button("CLICK to prepare");
+		add(preparedish4);
+		table1.dishstatus[3] = new TextField("Prepared/Ready");
+		add(table1.dishstatus[3]);
+		table1.scoredish[3] = new TextField("SCORE - Total: TBC");
+		add(table1.scoredish[3]);
+
+		//SET-UP TABLE 2
+		//Line entries - dish - 1 - table 2
+		add(new TextField("Table 2 - Soup"));
+		add(new TextField("2 seconds"));
+		table2.dishshoworder[0] = new TextField("0");
+		add(table2.dishshoworder[0]);
+		final Button table2_preparedish1 = new Button("CLICK to prepare");
+		add(table2_preparedish1);
+		table2.dishstatus[0] = new TextField("Prepared/Ready");
+		add(table2.dishstatus[0]);
+		table2.scoredish[0] = new TextField("SCORE - Time: TBC");
+		add(table2.scoredish[0]);
+
+		//Line entries - dish - 2 - table 2
+		add(new TextField("Table 2 - Steak"));
+		add(new TextField("5 seconds"));
+		table2.dishshoworder[1] = new TextField("0");
+		add(table2.dishshoworder[1]);
+		final Button table2_preparedish2 = new Button("CLICK to prepare");
+		add(table2_preparedish2);
+		table2.dishstatus[1] = new TextField("Prepared/Ready");
+		add(table2.dishstatus[1]);
+		table2.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
+		add(table2.scoredish[1]);
+
+		//Line entries - dish - 3 - table 2
+		add(new TextField("Table 2 - Burger"));
+		add(new TextField("10 seconds"));
+		table2.dishshoworder[2] = new TextField("0");
+		add(table2.dishshoworder[2]);
+		final Button table2_preparedish3 = new Button("CLICK to prepare");
+		add(table2_preparedish3);
+		table2.dishstatus[2] = new TextField("Prepared/Ready");
+		add(table2.dishstatus[2]);
+		table2.scoredish[2] = new TextField("SCORE - Temperature: TBC");
+		add(table2.scoredish[2]); 
+
+		//Line entries - dish - 4 - table 2
+		add(new TextField("Table 2 - Fish"));
+		add(new TextField("15 seconds"));
+		table2.dishshoworder[3] = new TextField("0");
+		add(table2.dishshoworder[3]);
+		final Button table2_preparedish4 = new Button("CLICK to prepare");
+		add(table2_preparedish4);
+		table2.dishstatus[3] = new TextField("Prepared/Ready");
+		add(table2.dishstatus[3]);
+		table2.scoredish[3] = new TextField("SCORE - Total: TBC");
+		add(table2.scoredish[3]);
+
+		//SET-UP TABLE 3
+		//Line entries - dish - 1 - table 3
+		add(new TextField("Table 3 - Soup"));
+		add(new TextField("2 seconds"));
+		table3.dishshoworder[0] = new TextField("0");
+		add(table3.dishshoworder[0]);
+		final Button table3_preparedish1 = new Button("CLICK to prepare");
+		add(table3_preparedish1);
+		table3.dishstatus[0] = new TextField("Prepared/Ready");
+		add(table3.dishstatus[0]);
+		table3.scoredish[0] = new TextField("SCORE - Time: TBC");
+		add(table3.scoredish[0]);
+
+		//Line entries - dish - 2 - table 3
+		add(new TextField("Table 3 - Steak"));
+		add(new TextField("5 seconds"));
+		table3.dishshoworder[1] = new TextField("0");
+		add(table3.dishshoworder[1]);
+		final Button table3_preparedish2 = new Button("CLICK to prepare");
+		add(table3_preparedish2);
+		table3.dishstatus[1] = new TextField("Prepared/Ready");
+		add(table3.dishstatus[1]);
+		table3.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
+		add(table3.scoredish[1]);
+
+		//Line entries - dish - 3 - table 3
+		add(new TextField("Table 3 - Burger"));
+		add(new TextField("10 seconds"));
+		table3.dishshoworder[2] = new TextField("0");
+		add(table3.dishshoworder[2]);
+		final Button table3_preparedish3 = new Button("CLICK to prepare");
+		add(table3_preparedish3);
+		table3.dishstatus[2] = new TextField("Prepared/Ready");
+		add(table3.dishstatus[2]);
+		table3.scoredish[2] = new TextField("SCORE - Temperature: TBC");
+		add(table3.scoredish[2]); 
+
+		//Line entries - dish - 4 - table 3
+		add(new TextField("Table 3 - Fish"));
+		add(new TextField("15 seconds"));
+		table3.dishshoworder[3] = new TextField("0");
+		add(table3.dishshoworder[3]);
+		final Button table3_preparedish4 = new Button("CLICK to prepare");
+		add(table3_preparedish4);
+		table3.dishstatus[3] = new TextField("Prepared/Ready");
+		add(table3.dishstatus[3]);
+		table3.scoredish[3] = new TextField("SCORE - Total: TBC");
+		add(table3.scoredish[3]);
+
+
+		//SET-UP TABLE 4
+		//Line entries - dish - 1 - table 4
+		add(new TextField("Table 4 - Soup"));
+		add(new TextField("2 seconds"));
+		table4.dishshoworder[0] = new TextField("0");
+		add(table4.dishshoworder[0]);
+		final Button table4_preparedish1 = new Button("CLICK to prepare");
+		add(table4_preparedish1);
+		table4.dishstatus[0] = new TextField("Prepared/Ready");
+		add(table4.dishstatus[0]);
+		table4.scoredish[0] = new TextField("SCORE - Time: TBC");
+		add(table4.scoredish[0]);
+
+		//Line entries - dish - 2 - table 4
+		add(new TextField("Table 4 - Steak"));
+		add(new TextField("5 seconds"));
+		table4.dishshoworder[1] = new TextField("0");
+		add(table4.dishshoworder[1]);
+		final Button table4_preparedish2 = new Button("CLICK to prepare");
+		add(table4_preparedish2);
+		table4.dishstatus[1] = new TextField("Prepared/Ready");
+		add(table4.dishstatus[1]);
+		table4.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
+		add(table4.scoredish[1]);
+
+		//Line entries - dish - 3 - table 4
+		add(new TextField("Table 4 - Burger"));
+		add(new TextField("10 seconds"));
+		table4.dishshoworder[2] = new TextField("0");
+		add(table4.dishshoworder[2]);
+		final Button table4_preparedish3 = new Button("CLICK to prepare");
+		add(table4_preparedish3);
+		table4.dishstatus[2] = new TextField("Prepared/Ready");
+		add(table4.dishstatus[2]);
+		table4.scoredish[2] = new TextField("SCORE - Temperature: TBC");
+		add(table4.scoredish[2]); 
+
+		//Line entries - dish - 4 - table 4
+		add(new TextField("Table 4 - Fish"));
+		add(new TextField("15 seconds"));
+		table4.dishshoworder[3] = new TextField("0");
+		add(table4.dishshoworder[3]);
+		final Button table4_preparedish4 = new Button("CLICK to prepare");
+		add(table4_preparedish4);
+		table4.dishstatus[3] = new TextField("Prepared/Ready");
+		add(table4.dishstatus[3]);
+		table4.scoredish[3] = new TextField("SCORE - Total: TBC");
+		add(table4.scoredish[3]);
  
 		playgame.addActionListener(new ActionListener()
 		{
@@ -82,7 +306,7 @@ public class RestaurantMatrix extends Applet
 					}
 				};
 	      
-				Timer timer = new Timer( (int) (1000) , taskPerformer);
+				final Timer timer = new Timer( (int) (1000) , taskPerformer);
 				timer.setRepeats(false);
 				timer.start();
 				try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();} 
@@ -104,7 +328,7 @@ public class RestaurantMatrix extends Applet
 					}
 				};
 	      
-				Timer timer2 = new Timer( (int) (1000*table_interval) , taskPerformer2);
+				final Timer timer2 = new Timer( (int) (1000*table_interval) , taskPerformer2);
 				timer2.setRepeats(true);
 				timer2.start();
 				try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
@@ -136,258 +360,53 @@ public class RestaurantMatrix extends Applet
 						{
 							score(4);
 							score_board(4);
+							}
 						}
-					}
-		};
+					};
 
- Timer timer3 = new Timer( 50 , taskPerformer3);
- timer3.setRepeats(true);
- timer3.start();
- try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
-	 }//End of play game ActionListener
- });
+					final Timer timer3 = new Timer( 50 , taskPerformer3);
+					timer3.setRepeats(true);
+					timer3.start();
+					try {Thread.sleep(1000);} catch (InterruptedException e1) { e1.printStackTrace();}
+	 
+					ActionListener taskPerformer4 = new ActionListener()
+					{
+						public void actionPerformed(ActionEvent evt)
+						{
+							scoretotal.setText("Game Over!");
+							scoretotal.setBackground(Color.blue);
+							timer.setRepeats(false);
+							timer2.setRepeats(false);
+							timer3.setRepeats(false);
+							timer.stop();
+							timer2.stop();
+							timer3.stop();
+							preparedish1.setEnabled(false);
+							preparedish2.setEnabled(false);
+							preparedish3.setEnabled(false);
+							preparedish4.setEnabled(false);
+							table2_preparedish1.setEnabled(false);
+							table2_preparedish2.setEnabled(false);
+							table2_preparedish3.setEnabled(false);
+							table2_preparedish4.setEnabled(false);
+							table3_preparedish1.setEnabled(false);
+							table3_preparedish2.setEnabled(false);
+							table3_preparedish3.setEnabled(false);
+							table3_preparedish4.setEnabled(false);
+							table4_preparedish1.setEnabled(false);
+							table4_preparedish2.setEnabled(false);
+							table4_preparedish3.setEnabled(false);
+							table4_preparedish4.setEnabled(false);
+						}
+					};
+
+					Timer timer4 = new Timer((int)(1000)*5, taskPerformer4);
+					timer4.setRepeats(false);
+					timer4.start();
+					try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+			}
+		});
  
- 
- //SET Header rows - play game and scoreboard
- scoretime = new TextField("SCORE - Time: TBC");
- add(scoretime);
- scoretime.setBackground(Color.yellow);
- scoredispersion = new TextField("SCORE - Dispersion: TBC");
- add(scoredispersion);
- scoredispersion.setBackground(Color.yellow);
- scoretemp = new TextField("SCORE - Temperature: TBC");
- add(scoretemp);
- scoretemp.setBackground(Color.yellow);
- scoretotal = new TextField("SCORE Score: TBC");
- add(scoretotal);
- scoretotal.setBackground(Color.yellow);
- TextField computerscore = new TextField("COMPUTER SCORE: TBC");
- add(computerscore);
- computerscore.setBackground(Color.yellow);
- 
- //Matrix headings
- TextField menuoptions = new TextField("MENU OPTIONS");
- add(menuoptions);
- menuoptions.setBackground(Color.GRAY);
-
- TextField expecteddtime = new TextField("EXPECTED TIME");
- add(expecteddtime);
- expecteddtime.setBackground(Color.GRAY);
- 
- TextField showorder = new TextField("SHOW ORDER");
- add(showorder);
- showorder.setBackground(Color.GRAY);
- 
- TextField preparefood = new TextField("PREPARE FOOD?");
- add(preparefood);
- preparefood.setBackground(Color.GRAY);
- 
- TextField foodstatus = new TextField("DISH STATUS");
- add(foodstatus);
- foodstatus.setBackground(Color.GRAY);
- 
- TextField customerscore = new TextField("CUSTOMER SCORE");
- add(customerscore);
- customerscore.setBackground(Color.GRAY);
- 
- //SET-UP TABLE 1
- //Line entries - dish - 1 - Table 1
- add(new TextField("Table 1 - Soup"));
- add(new TextField("2 seconds"));
- table1.dishshoworder[0] = new TextField("0");
- add(table1.dishshoworder[0]);
- Button preparedish1 = new Button("CLICK to prepare");
- add(preparedish1);
- table1.dishstatus[0] = new TextField("Prepared/Ready");
- add(table1.dishstatus[0]);
- table1.scoredish[0] = new TextField("SCORE - Time: TBC");
- add(table1.scoredish[0]);
- 
- //Line entries - dish - 2 - Table 1
- add(new TextField("Table 1 - Steak"));
- add(new TextField("5 seconds"));
- table1.dishshoworder[1] = new TextField("0");
- add(table1.dishshoworder[1]);
- Button preparedish2 = new Button("CLICK to prepare");
- add(preparedish2);
- table1.dishstatus[1] = new TextField("Prepared/Ready");
- add(table1.dishstatus[1]);
- table1.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
- add(table1.scoredish[1]);
- 
-//Line entries - dish - 3 - Table 1
-add(new TextField("Table 1 - Burger"));
-add(new TextField("10 seconds"));
-table1.dishshoworder[2] = new TextField("0");
-add(table1.dishshoworder[2]);
-Button preparedish3 = new Button("CLICK to prepare");
-add(preparedish3);
-table1.dishstatus[2] = new TextField("Prepared/Ready");
-add(table1.dishstatus[2]);
-table1.scoredish[2] = new TextField("SCORE - Temperature: TBC");
-add(table1.scoredish[2]); 
-
-//Line entries - dish - 4 - Table 1
-add(new TextField("Table 1 - Fish"));
-add(new TextField("15 seconds"));
-table1.dishshoworder[3] = new TextField("0");
-add(table1.dishshoworder[3]);
-Button preparedish4 = new Button("CLICK to prepare");
-add(preparedish4);
-table1.dishstatus[3] = new TextField("Prepared/Ready");
-add(table1.dishstatus[3]);
-table1.scoredish[3] = new TextField("SCORE - Total: TBC");
-add(table1.scoredish[3]);
-
-//SET-UP TABLE 2
-//Line entries - dish - 1 - table 2
-add(new TextField("Table 2 - Soup"));
-add(new TextField("2 seconds"));
-table2.dishshoworder[0] = new TextField("0");
-add(table2.dishshoworder[0]);
-Button table2_preparedish1 = new Button("CLICK to prepare");
-add(table2_preparedish1);
-table2.dishstatus[0] = new TextField("Prepared/Ready");
-add(table2.dishstatus[0]);
-table2.scoredish[0] = new TextField("SCORE - Time: TBC");
-add(table2.scoredish[0]);
-
-//Line entries - dish - 2 - table 2
-add(new TextField("Table 2 - Steak"));
-add(new TextField("5 seconds"));
-table2.dishshoworder[1] = new TextField("0");
-add(table2.dishshoworder[1]);
-Button table2_preparedish2 = new Button("CLICK to prepare");
-add(table2_preparedish2);
-table2.dishstatus[1] = new TextField("Prepared/Ready");
-add(table2.dishstatus[1]);
-table2.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
-add(table2.scoredish[1]);
-
-//Line entries - dish - 3 - table 2
-add(new TextField("Table 2 - Burger"));
-add(new TextField("10 seconds"));
-table2.dishshoworder[2] = new TextField("0");
-add(table2.dishshoworder[2]);
-Button table2_preparedish3 = new Button("CLICK to prepare");
-add(table2_preparedish3);
-table2.dishstatus[2] = new TextField("Prepared/Ready");
-add(table2.dishstatus[2]);
-table2.scoredish[2] = new TextField("SCORE - Temperature: TBC");
-add(table2.scoredish[2]); 
-
-//Line entries - dish - 4 - table 2
-add(new TextField("Table 2 - Fish"));
-add(new TextField("15 seconds"));
-table2.dishshoworder[3] = new TextField("0");
-add(table2.dishshoworder[3]);
-Button table2_preparedish4 = new Button("CLICK to prepare");
-add(table2_preparedish4);
-table2.dishstatus[3] = new TextField("Prepared/Ready");
-add(table2.dishstatus[3]);
-table2.scoredish[3] = new TextField("SCORE - Total: TBC");
-add(table2.scoredish[3]);
-
-//SET-UP TABLE 3
-//Line entries - dish - 1 - table 3
-add(new TextField("Table 3 - Soup"));
-add(new TextField("2 seconds"));
-table3.dishshoworder[0] = new TextField("0");
-add(table3.dishshoworder[0]);
-Button table3_preparedish1 = new Button("CLICK to prepare");
-add(table3_preparedish1);
-table3.dishstatus[0] = new TextField("Prepared/Ready");
-add(table3.dishstatus[0]);
-table3.scoredish[0] = new TextField("SCORE - Time: TBC");
-add(table3.scoredish[0]);
-
-//Line entries - dish - 2 - table 3
-add(new TextField("Table 3 - Steak"));
-add(new TextField("5 seconds"));
-table3.dishshoworder[1] = new TextField("0");
-add(table3.dishshoworder[1]);
-Button table3_preparedish2 = new Button("CLICK to prepare");
-add(table3_preparedish2);
-table3.dishstatus[1] = new TextField("Prepared/Ready");
-add(table3.dishstatus[1]);
-table3.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
-add(table3.scoredish[1]);
-
-//Line entries - dish - 3 - table 3
-add(new TextField("Table 3 - Burger"));
-add(new TextField("10 seconds"));
-table3.dishshoworder[2] = new TextField("0");
-add(table3.dishshoworder[2]);
-Button table3_preparedish3 = new Button("CLICK to prepare");
-add(table3_preparedish3);
-table3.dishstatus[2] = new TextField("Prepared/Ready");
-add(table3.dishstatus[2]);
-table3.scoredish[2] = new TextField("SCORE - Temperature: TBC");
-add(table3.scoredish[2]); 
-
-//Line entries - dish - 4 - table 3
-add(new TextField("Table 3 - Fish"));
-add(new TextField("15 seconds"));
-table3.dishshoworder[3] = new TextField("0");
-add(table3.dishshoworder[3]);
-Button table3_preparedish4 = new Button("CLICK to prepare");
-add(table3_preparedish4);
-table3.dishstatus[3] = new TextField("Prepared/Ready");
-add(table3.dishstatus[3]);
-table3.scoredish[3] = new TextField("SCORE - Total: TBC");
-add(table3.scoredish[3]);
-
-
-//SET-UP TABLE 4
-//Line entries - dish - 1 - table 4
-add(new TextField("Table 4 - Soup"));
-add(new TextField("2 seconds"));
-table4.dishshoworder[0] = new TextField("0");
-add(table4.dishshoworder[0]);
-Button table4_preparedish1 = new Button("CLICK to prepare");
-add(table4_preparedish1);
-table4.dishstatus[0] = new TextField("Prepared/Ready");
-add(table4.dishstatus[0]);
-table4.scoredish[0] = new TextField("SCORE - Time: TBC");
-add(table4.scoredish[0]);
-
-//Line entries - dish - 2 - table 4
-add(new TextField("Table 4 - Steak"));
-add(new TextField("5 seconds"));
-table4.dishshoworder[1] = new TextField("0");
-add(table4.dishshoworder[1]);
-Button table4_preparedish2 = new Button("CLICK to prepare");
-add(table4_preparedish2);
-table4.dishstatus[1] = new TextField("Prepared/Ready");
-add(table4.dishstatus[1]);
-table4.scoredish[1] = new TextField("SCORE - Dispersion: TBC");
-add(table4.scoredish[1]);
-
-//Line entries - dish - 3 - table 4
-add(new TextField("Table 4 - Burger"));
-add(new TextField("10 seconds"));
-table4.dishshoworder[2] = new TextField("0");
-add(table4.dishshoworder[2]);
-Button table4_preparedish3 = new Button("CLICK to prepare");
-add(table4_preparedish3);
-table4.dishstatus[2] = new TextField("Prepared/Ready");
-add(table4.dishstatus[2]);
-table4.scoredish[2] = new TextField("SCORE - Temperature: TBC");
-add(table4.scoredish[2]); 
-
-//Line entries - dish - 4 - table 4
-add(new TextField("Table 4 - Fish"));
-add(new TextField("15 seconds"));
-table4.dishshoworder[3] = new TextField("0");
-add(table4.dishshoworder[3]);
-Button table4_preparedish4 = new Button("CLICK to prepare");
-add(table4_preparedish4);
-table4.dishstatus[3] = new TextField("Prepared/Ready");
-add(table4.dishstatus[3]);
-table4.scoredish[3] = new TextField("SCORE - Total: TBC");
-add(table4.scoredish[3]);
-
-
 //TABLE 1 - Prepare Dish button actions:
  preparedish1.addActionListener(new ActionListener()
  {
@@ -417,10 +436,10 @@ add(table4.scoredish[3]);
 		            }
 		     };
 		      
-		        Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
-		        timer.setRepeats(false);
-		        timer.start();
-		        try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
+		     Timer timer = new Timer( (int) (1000*wait_time) , taskPerformer);
+		     timer.setRepeats(false);
+		     timer.start();
+		     try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();}
 		 
 		 }
 	 }
@@ -908,354 +927,354 @@ if (order_status[15]){
  
 }
 
-/*
- * Generates a random order for the head chef (player) to introduce delays for.
- * Each dish can be ordered only once.
- * @return void
- */
-void create_order(int order_number)
-{
-	double value = random_var();
-	
-	// select one dish
-	if(value >= 0 && value < 0.25)
+	/*
+	 * Generates a random order for the head chef (player) to introduce delays for.
+	 * Each dish can be ordered only once.
+	 * @return void
+	 */
+	void create_order(int order_number)
 	{
-		double val1 = random_var();
+		double value = random_var();
 		
-		if(val1 >= 0 && val1 < 0.25)
-			order_status[order_number*4-4] = true;
-		else if(val1 >= 0.25 && val1 < 0.50)
-			order_status[order_number*4-3] = true;
-		else if(val1 >= 0.50 && val1 < 0.75)
-			order_status[order_number*4-2] = true;
-		else
-			order_status[order_number*4-1] = true;
-	}
+		// select one dish
+		if(value >= 0 && value < 0.25)
+		{
+			double val1 = random_var();
+			
+			if(val1 >= 0 && val1 < 0.25)
+				order_status[order_number*4-4] = true;
+			else if(val1 >= 0.25 && val1 < 0.50)
+				order_status[order_number*4-3] = true;
+			else if(val1 >= 0.50 && val1 < 0.75)
+				order_status[order_number*4-2] = true;
+			else
+				order_status[order_number*4-1] = true;
+		}
 
-	// select two dishes
-	else if(value >= 0.25 && value < 0.50)
-	{
-		double val2 = random_var();
-		
-		// select the first dish
-		if(val2 >= 0 && val2 < 0.25)
+		// select two dishes
+		else if(value >= 0.25 && value < 0.50)
 		{
-			order_status[order_number*4-4] = true;
+			double val2 = random_var();
 			
-			double val2a = random_var();
-			
-			// select the second dish
-			if(val2a >= 0 && val2a < 0.33)
-				order_status[order_number*4-3] = true;
-			else if(val2a >= 0.33 && val2a < 0.66)
-				order_status[order_number*4-2] = true;
-			else
-				order_status[order_number*4-1] = true;
-		}
-		else if(val2 >= 0.25 && val2 < 0.50)
-		{
-			order_status[order_number*4-3] = true;
-			
-			double val2b = random_var();
-			
-			if(val2b >= 0 && val2b < 0.33)
+			// select the first dish
+			if(val2 >= 0 && val2 < 0.25)
+			{
 				order_status[order_number*4-4] = true;
-			else if(val2b >= 0.33 && val2b < 0.66)
-				order_status[order_number*4-2] = true;
-			else
-				order_status[order_number*4-1] = true;
-		}
-		else if(val2 >= 0.50 && val2 < 0.75)
-		{
-			order_status[order_number*4-2] = true;
-		
-			double val2c = random_var();
-			
-			if(val2c >= 0 && val2c < 0.33)
-				order_status[order_number*4-4] = true;
-			else if(val2c >= 0.33 && val2c < 0.66)
+				
+				double val2a = random_var();
+				
+				// select the second dish
+				if(val2a >= 0 && val2a < 0.33)
+					order_status[order_number*4-3] = true;
+				else if(val2a >= 0.33 && val2a < 0.66)
+					order_status[order_number*4-2] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else if(val2 >= 0.25 && val2 < 0.50)
+			{
 				order_status[order_number*4-3] = true;
+				
+				double val2b = random_var();
+				
+				if(val2b >= 0 && val2b < 0.33)
+					order_status[order_number*4-4] = true;
+				else if(val2b >= 0.33 && val2b < 0.66)
+					order_status[order_number*4-2] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
+			else if(val2 >= 0.50 && val2 < 0.75)
+			{
+				order_status[order_number*4-2] = true;
+			
+				double val2c = random_var();
+				
+				if(val2c >= 0 && val2c < 0.33)
+					order_status[order_number*4-4] = true;
+				else if(val2c >= 0.33 && val2c < 0.66)
+					order_status[order_number*4-3] = true;
+				else
+					order_status[order_number*4-1] = true;
+			}
 			else
+			{
 				order_status[order_number*4-1] = true;
+			
+				double val2d = random_var();
+				
+				if(val2d >= 0 && val2d < 0.33)
+					order_status[order_number*4-4] = true;
+				else if(val2d >= 0.33 && val2d < 0.66)
+					order_status[order_number*4-3] = true;
+				else
+					order_status[order_number*4-2] = true;
+			}
 		}
+		
+		// select three dishes
+		else if(value >= 0.50 && value < 0.75)
+		{
+			double val3 = random_var();
+			
+			// select the first dish
+			if(val3 >= 0 && val3 < 0.25)
+			{
+				order_status[order_number*4-4] = true;
+				
+				double val3a = random_var();
+				
+				// select the second dish
+				if(val3a >= 0 && val3a < 0.33)
+				{
+					order_status[order_number*4-3] = true;
+				
+					double val3aa = random_var();
+					
+					// select the third dish
+					if(val3aa >= 0 && val3aa < 0.50)
+						order_status[order_number*4-2] = true;
+					else
+						order_status[order_number*4-1] = true;
+				}
+				else if(val3a >= 0.33 && val3a < 0.66)
+				{
+					order_status[order_number*4-2] = true;
+					
+					double val3ab = random_var();
+					
+					if(val3ab >= 0 && val3ab < 0.50)
+						order_status[order_number*4-3] = true;
+					else
+						order_status[order_number*4-1] = true;
+				}
+				else
+				{
+					order_status[order_number*4-1] = true;
+					
+					double val3ac = random_var();
+					
+					if(val3ac >= 0 && val3ac < 0.50)
+						order_status[order_number*4-3] = true;
+					else
+						order_status[order_number*4-2] = true;
+				}
+			}
+			else if(val3 >= 0.25 && val3 < 0.50)
+			{
+				order_status[order_number*4-3] = true;
+				
+				double val3b = random_var();
+				
+				if(val3b >= 0 && val3b < 0.33)
+				{
+					order_status[order_number*4-4] = true;
+				
+					double val3ba = random_var();
+					
+					if(val3ba >= 0 && val3ba < 0.50)
+						order_status[order_number*4-2] = true;
+					else
+						order_status[order_number*4-1] = true;
+				}
+				else if(val3b >= 0.33 && val3b < 0.66)
+				{
+					order_status[order_number*4-2] = true;
+					
+					double val3bb = random_var();
+					
+					if(val3bb >= 0 && val3bb < 0.50)
+						order_status[order_number*4-4] = true;
+					else
+						order_status[order_number*4-1] = true;
+				}
+				else
+				{
+					order_status[order_number*4-1] = true;
+					
+					double val3bc = random_var();
+					
+					if(val3bc >= 0 && val3bc < 0.50)
+						order_status[order_number*4-4] = true;
+					else
+						order_status[order_number*4-2] = true;
+				}
+			}
+			else if(val3 >= 0.50 && val3 < 0.75)
+			{
+				order_status[order_number*4-2] = true;
+			
+				double val3c = random_var();
+				
+				if(val3c >= 0 && val3c < 0.33)
+				{
+					order_status[order_number*4-4] = true;
+					
+					double val3ca = random_var();
+					
+					if(val3ca >= 0 && val3ca < 0.50)
+						order_status[order_number*4-3] = true;
+					else
+						order_status[order_number*4-1] = true;
+				}	
+				else if(val3c >= 0.33 && val3c < 0.66)
+				{
+					order_status[order_number*4-3] = true;
+					
+					double val3cb = random_var();
+					
+					if(val3cb >= 0 && val3cb < 0.50)
+						order_status[order_number*4-4] = true;
+					else
+						order_status[order_number*4-1] = true;
+				}
+				else
+				{
+					order_status[order_number*4-1] = true;
+					
+					double val3cc = random_var();
+					
+					if(val3cc >= 0 && val3cc < 0.50)
+						order_status[order_number*4-4] = true;
+					else
+						order_status[order_number*4-3] = true;
+				}
+			}
+			else
+			{
+				order_status[order_number*4-1] = true;
+			
+				double val3d = random_var();
+				
+				if(val3d >= 0 && val3d < 0.33)
+				{
+					order_status[order_number*4-4] = true;
+					
+					double val3da = random_var();
+					
+					if(val3da >= 0 && val3da < 0.50)
+						order_status[order_number*4-3] = true;
+					else
+						order_status[order_number*4-2] = true;
+				}
+				else if(val3d >= 0.33 && val3d < 0.66)
+				{
+					order_status[order_number*4-3] = true;
+					
+					double val3db = random_var();
+					
+					if(val3db >= 0 && val3db < 0.50)
+						order_status[order_number*4-4] = true;
+					else
+						order_status[order_number*4-2] = true;
+				}
+				else
+				{
+					order_status[order_number*4-2] = true;
+					
+					double val3dc = random_var();
+					
+					if(val3dc >= 0 && val3dc < 0.50)
+						order_status[order_number*4-4] = true;
+					else
+						order_status[order_number*4-3] = true;
+				}
+			}
+		}
+		
+		// select four dishes
 		else
 		{
-			order_status[order_number*4-1] = true;
-		
-			double val2d = random_var();
-			
-			if(val2d >= 0 && val2d < 0.33)
-				order_status[order_number*4-4] = true;
-			else if(val2d >= 0.33 && val2d < 0.66)
-				order_status[order_number*4-3] = true;
-			else
-				order_status[order_number*4-2] = true;
-		}
-	}
-	
-	// select three dishes
-	else if(value >= 0.50 && value < 0.75)
-	{
-		double val3 = random_var();
-		
-		// select the first dish
-		if(val3 >= 0 && val3 < 0.25)
-		{
 			order_status[order_number*4-4] = true;
-			
-			double val3a = random_var();
-			
-			// select the second dish
-			if(val3a >= 0 && val3a < 0.33)
-			{
-				order_status[order_number*4-3] = true;
-			
-				double val3aa = random_var();
-				
-				// select the third dish
-				if(val3aa >= 0 && val3aa < 0.50)
-					order_status[order_number*4-2] = true;
-				else
-					order_status[order_number*4-1] = true;
-			}
-			else if(val3a >= 0.33 && val3a < 0.66)
-			{
-				order_status[order_number*4-2] = true;
-				
-				double val3ab = random_var();
-				
-				if(val3ab >= 0 && val3ab < 0.50)
-					order_status[order_number*4-3] = true;
-				else
-					order_status[order_number*4-1] = true;
-			}
-			else
-			{
-				order_status[order_number*4-1] = true;
-				
-				double val3ac = random_var();
-				
-				if(val3ac >= 0 && val3ac < 0.50)
-					order_status[order_number*4-3] = true;
-				else
-					order_status[order_number*4-2] = true;
-			}
-		}
-		else if(val3 >= 0.25 && val3 < 0.50)
-		{
 			order_status[order_number*4-3] = true;
-			
-			double val3b = random_var();
-			
-			if(val3b >= 0 && val3b < 0.33)
-			{
-				order_status[order_number*4-4] = true;
-			
-				double val3ba = random_var();
-				
-				if(val3ba >= 0 && val3ba < 0.50)
-					order_status[order_number*4-2] = true;
-				else
-					order_status[order_number*4-1] = true;
-			}
-			else if(val3b >= 0.33 && val3b < 0.66)
-			{
-				order_status[order_number*4-2] = true;
-				
-				double val3bb = random_var();
-				
-				if(val3bb >= 0 && val3bb < 0.50)
-					order_status[order_number*4-4] = true;
-				else
-					order_status[order_number*4-1] = true;
-			}
-			else
-			{
-				order_status[order_number*4-1] = true;
-				
-				double val3bc = random_var();
-				
-				if(val3bc >= 0 && val3bc < 0.50)
-					order_status[order_number*4-4] = true;
-				else
-					order_status[order_number*4-2] = true;
-			}
-		}
-		else if(val3 >= 0.50 && val3 < 0.75)
-		{
 			order_status[order_number*4-2] = true;
+			order_status[order_number*4-1] = true;
+		}
 		
-			double val3c = random_var();
-			
-			if(val3c >= 0 && val3c < 0.33)
+		// update the display
+		if (order_number == 1)
+		{	
+			scoreboard_status[0] = false;
+				
+			for(int i = 0; i < 4; i++)
 			{
-				order_status[order_number*4-4] = true;
-				
-				double val3ca = random_var();
-				
-				if(val3ca >= 0 && val3ca < 0.50)
-					order_status[order_number*4-3] = true;
+				if(order_status[i])
+				{
+					table1.dishshoworder[i].setText("Items ordered: 1");
+					table1.dishshoworder[i].setBackground(Color.GREEN);
+					table1.dishstatus[i].setText("Prepared/Ready");
+					table1.dishstatus[i].setBackground(Color.white);
+				} 
 				else
-					order_status[order_number*4-1] = true;
+				{
+					table1.dishshoworder[i].setText("Items ordered: 0");
+					order_status[i + 16] = true;
+				}
+			}
+		}	
+		
+		if (order_number == 2)
+		{		
+			scoreboard_status[1] = false;
+			
+			for(int i = 0, j = 4; i < 4; i++, j--)
+			{
+				if(order_status[order_number*4 - j])
+				{
+					table2.dishshoworder[i].setText("Items ordered: 1");
+					table2.dishshoworder[i].setBackground(Color.GREEN);
+					table2.dishstatus[i].setText("Prepared/Ready");
+					table2.dishstatus[i].setBackground(Color.white);
+				} 
+				else
+				{
+					table2.dishshoworder[i].setText("Items ordered: 0");
+					order_status[order_number*4 - j + 16] = true;
+				}
 			}	
-			else if(val3c >= 0.33 && val3c < 0.66)
-			{
-				order_status[order_number*4-3] = true;
-				
-				double val3cb = random_var();
-				
-				if(val3cb >= 0 && val3cb < 0.50)
-					order_status[order_number*4-4] = true;
-				else
-					order_status[order_number*4-1] = true;
-			}
-			else
-			{
-				order_status[order_number*4-1] = true;
-				
-				double val3cc = random_var();
-				
-				if(val3cc >= 0 && val3cc < 0.50)
-					order_status[order_number*4-4] = true;
-				else
-					order_status[order_number*4-3] = true;
-			}
 		}
-		else
-		{
-			order_status[order_number*4-1] = true;
-		
-			double val3d = random_var();
-			
-			if(val3d >= 0 && val3d < 0.33)
-			{
-				order_status[order_number*4-4] = true;
-				
-				double val3da = random_var();
-				
-				if(val3da >= 0 && val3da < 0.50)
-					order_status[order_number*4-3] = true;
-				else
-					order_status[order_number*4-2] = true;
-			}
-			else if(val3d >= 0.33 && val3d < 0.66)
-			{
-				order_status[order_number*4-3] = true;
-				
-				double val3db = random_var();
-				
-				if(val3db >= 0 && val3db < 0.50)
-					order_status[order_number*4-4] = true;
-				else
-					order_status[order_number*4-2] = true;
-			}
-			else
-			{
-				order_status[order_number*4-2] = true;
-				
-				double val3dc = random_var();
-				
-				if(val3dc >= 0 && val3dc < 0.50)
-					order_status[order_number*4-4] = true;
-				else
-					order_status[order_number*4-3] = true;
-			}
-		}
-	}
-	
-	// select four dishes
-	else
-	{
-		order_status[order_number*4-4] = true;
-		order_status[order_number*4-3] = true;
-		order_status[order_number*4-2] = true;
-		order_status[order_number*4-1] = true;
-	}
-	
-	// update the display
-	if (order_number == 1)
-	{	
-		scoreboard_status[0] = false;
-			
-		for(int i = 0; i < 4; i++)
-		{
-			if(order_status[i])
-			{
-				table1.dishshoworder[i].setText("Items ordered: 1");
-				table1.dishshoworder[i].setBackground(Color.GREEN);
-				table1.dishstatus[i].setText("Prepared/Ready");
-				table1.dishstatus[i].setBackground(Color.white);
-			} 
-			else
-			{
-				table1.dishshoworder[i].setText("Items ordered: 0");
-				order_status[i + 16] = true;
-			}
-		}
-	}	
-	
-	if (order_number == 2)
-	{		
-		scoreboard_status[1] = false;
-		
-		for(int i = 0, j = 4; i < 4; i++, j--)
-		{
-			if(order_status[order_number*4 - j])
-			{
-				table2.dishshoworder[i].setText("Items ordered: 1");
-				table2.dishshoworder[i].setBackground(Color.GREEN);
-				table2.dishstatus[i].setText("Prepared/Ready");
-				table2.dishstatus[i].setBackground(Color.white);
-			} 
-			else
-			{
-				table2.dishshoworder[i].setText("Items ordered: 0");
-				order_status[order_number*4 - j + 16] = true;
-			}
-		}	
-	}
 
-	if (order_number == 3)
-	{		
-		scoreboard_status[2] = false;
-	
-		for(int i = 0, j = 4; i < 4; i++, j--)
-		{
-			if(order_status[order_number*4 - j])
+		if (order_number == 3)
+		{		
+			scoreboard_status[2] = false;
+		
+			for(int i = 0, j = 4; i < 4; i++, j--)
 			{
-				table3.dishshoworder[i].setText("Items ordered: 1");
-				table3.dishshoworder[i].setBackground(Color.GREEN);
-				table3.dishstatus[i].setText("Prepared/Ready");
-				table3.dishstatus[i].setBackground(Color.white);
-			} 
-			else
-			{
-				table3.dishshoworder[i].setText("Items ordered: 0");
-				order_status[order_number*4 - j + 16] = true;
+				if(order_status[order_number*4 - j])
+				{
+					table3.dishshoworder[i].setText("Items ordered: 1");
+					table3.dishshoworder[i].setBackground(Color.GREEN);
+					table3.dishstatus[i].setText("Prepared/Ready");
+					table3.dishstatus[i].setBackground(Color.white);
+				} 
+				else
+				{
+					table3.dishshoworder[i].setText("Items ordered: 0");
+					order_status[order_number*4 - j + 16] = true;
+				}
 			}
 		}
-	}
+			
+		if (order_number == 4)
+		{	
+			scoreboard_status[3] = false;
 		
-	if (order_number == 4)
-	{	
-		scoreboard_status[3] = false;
-	
-		for(int i = 0, j = 4; i < 4; i++, j--)
-		{
-			if(order_status[order_number*4 - j])
+			for(int i = 0, j = 4; i < 4; i++, j--)
 			{
-				table4.dishshoworder[i].setText("Items ordered: 1");
-				table4.dishshoworder[i].setBackground(Color.GREEN);
-				table4.dishstatus[i].setText("Prepared/Ready");
-				table4.dishstatus[i].setBackground(Color.white);} 
-			else
-			{
-				table4.dishshoworder[i].setText("Items ordered: 0");
-				order_status[order_number*4 - j + 16] = true;
-			}
-		}	
+				if(order_status[order_number*4 - j])
+				{
+					table4.dishshoworder[i].setText("Items ordered: 1");
+					table4.dishshoworder[i].setBackground(Color.GREEN);
+					table4.dishstatus[i].setText("Prepared/Ready");
+					table4.dishstatus[i].setBackground(Color.white);} 
+				else
+				{
+					table4.dishshoworder[i].setText("Items ordered: 0");
+					order_status[order_number*4 - j + 16] = true;
+				}
+			}	
+		}
 	}
-}
 
 double prepare_food(int dish_number)
 {
