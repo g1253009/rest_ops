@@ -76,15 +76,19 @@ public class RestaurantMatrix extends Applet
 		scoretime = new TextField("SCORE - Time: TBC");
 		add(scoretime);
 		scoretime.setBackground(Color.yellow);
+		
 		scoredispersion = new TextField("SCORE - Dispersion: TBC");
 		add(scoredispersion);
 		scoredispersion.setBackground(Color.yellow);
+		
 		scoretemp = new TextField("SCORE - Temperature: TBC");
 		add(scoretemp);
 		scoretemp.setBackground(Color.yellow);
+		
 		scoretotal = new TextField("SCORE Score: TBC");
 		add(scoretotal);
 		scoretotal.setBackground(Color.yellow);
+		
 		TextField computerscore = new TextField("COMPUTER SCORE: TBC");
 		add(computerscore);
 		computerscore.setBackground(Color.yellow);
@@ -122,7 +126,8 @@ public class RestaurantMatrix extends Applet
 		String which_dish = new String();
 		int exp_time = 0;
 		int text_field = 0;
-		for (int i = 0; i<restaurant_size; i++)
+		
+		for (int i = 0; i < restaurant_size; i++)
 		{	 
 			 if (i == 0 || i%4 == 0){which_dish = "Soup"; exp_time = preparation_time[0]; table_setup++;}
 			 else if (i == 1 || i == 5 || i == 9 || i == 13){which_dish = "Steak"; exp_time = preparation_time[1];}
@@ -154,6 +159,8 @@ public class RestaurantMatrix extends Applet
 						create_order(table_number);
 						
 		            	order_start_time[table_number-1] = new Date();
+		            	
+						//computer_cook(table_number+1);
 					}
 				};
 	      
@@ -163,15 +170,17 @@ public class RestaurantMatrix extends Applet
 				try {Thread.sleep(1000);} catch (InterruptedException e1) {e1.printStackTrace();} 
 	        
 				/* 
-				 * ActionListener to control order generation for each table - timer repeat produces a loop through each table
-				 * calling the 'create_order' function to generate the order
+				 * ActionListener to control order generation for each table. Timer repeat produces a loop through each table
+				 * calling the 'create_order' function to generate the order.
 				 */
 				ActionListener taskPerformer2 = new ActionListener()
 				{
 					public void actionPerformed(ActionEvent evt)
 					{
-						if (table_number < 4) table_number++;
-						else table_number = 1;
+						if (table_number < 4)
+							table_number++;
+						else
+							table_number = 1;
 	            
 						create_order(table_number);
 	            	
@@ -214,9 +223,10 @@ public class RestaurantMatrix extends Applet
 						{
 							score(4);
 							score_board(4);
-							}
+							
 						}
-					};
+					}
+				};
 
 					final Timer timer3 = new Timer( 50 , taskPerformer3);
 					timer3.setRepeats(true);
@@ -637,7 +647,7 @@ public class RestaurantMatrix extends Applet
 			}
 		});	 
 	}
-
+	
 	/*
 	 * Generates a random order for the head chef (player) to introduce delays for.
 	 * Each dish can be ordered only once.
@@ -1022,7 +1032,7 @@ public class RestaurantMatrix extends Applet
 
 	/*
 	 * Calculates the score.
-	 * @return int
+	 * @return void
 	 */
 	void score(double table)
 	{
@@ -1037,8 +1047,10 @@ public class RestaurantMatrix extends Applet
 		
 		for (int i = (int) (table*4-3); i < (int) (table*4); i++)
 		{
-			if (dish_time[i] > total_time) total_time = dish_time[i];
-			if (dish_time[i] < quickest  && dish_time[i] > 0) quickest = dish_time[i];
+			if (dish_time[i] > total_time)
+				total_time = dish_time[i];
+			if (dish_time[i] < quickest  && dish_time[i] > 0)
+				quickest = dish_time[i];
 		}
 		
 		dispersion = total_time - quickest;
@@ -1142,7 +1154,8 @@ public class RestaurantMatrix extends Applet
 	}
 	
 	
-	/* Function to update the display for a dish being prepared.  Initiated by the 'Press to prepare' button.
+	/* 
+	 * Function to update the display for a dish being prepared.  Initiated by the 'Press to prepare' button.
 	 * The function also updates the order-status flag of the dish
 	 */
 	void prepare_button(final int dish_number, int dish)
@@ -1158,7 +1171,8 @@ public class RestaurantMatrix extends Applet
 		}
 	}
 
-	/* Function to update the display when a dish has been prepared.
+	/* 
+	 * Function to update the display when a dish has been prepared.
 	 * The function also updates the order_status flag of the dish.
 	 */
 	void display_ready(int dish_number)
@@ -1172,7 +1186,7 @@ public class RestaurantMatrix extends Applet
 		else table = 4;    
 	    
 		Date date = new Date();
-		dish_time[dish_number] =  (date.getTime() - order_start_time[table].getTime())/1000;
+		dish_time[dish_number] = (date.getTime() - order_start_time[table].getTime())/1000;
 		
 		// Update the display.
 		textfields[dish_number*5+3].setText("Dish is ready");
